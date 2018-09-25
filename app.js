@@ -1,11 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 const authRoutes = require('./routes/auth');
 const movieRoutes = require('./routes/movie');
 const actorRoutes = require('./routes/actor');
 const categoryRoutes = require('./routes/category');
+const keys = require('./config/keys');
 
 const app = express();
+
+mongoose.connect(keys.mongoURI, {useNewUrlParser: true})
+    .then(() => console.log("Mongo DB connected"))
+    .catch((err) => console.log(err));
 
 app.use(require('morgan')('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
