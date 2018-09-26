@@ -40,7 +40,8 @@ module.exports.register = async function (req, res) {
         const user = new User({
             login: req.body.login,
             password: bcrypt.hashSync(password, salt),
-            name: req.body.name
+            name: req.body.name,
+            isAdmin: false
         });
         try {
             await user.save();

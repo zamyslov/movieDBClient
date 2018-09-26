@@ -2,7 +2,7 @@ module.exports.getAll = (req, res) => {
 
 };
 
-module.exports.get = (req, res) => {
+module.exports.getById = (req, res) => {
 
 };
 

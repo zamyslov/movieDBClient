@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/', passport.authenticate('jwt', {session: false}), controller.getAll);
 router.post('/', controller.create);
-router.get('/:id', controller.get);
+router.get('/:id', controller.getById);
 router.delete('/:id', controller.delete);
 
 module.exports = router;
