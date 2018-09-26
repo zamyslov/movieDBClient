@@ -1,19 +1,58 @@
-module.exports.getAll = (req, res) => {
+const Actor = require('../models/Actor');
+const errorHandler = require('../utils/errorHandler');
 
+
+module.exports.getAll = async (req, res) => {
+    try {
+        const actor = await Actor.find();
+        res.status(200).json(actor);
+    } catch (e) {
+        errorHandler(res, e);
+    }
 };
 
-module.exports.getById = (req, res) => {
-
+module.exports.getById = async (req, res) => {
+    try {
+        const actor = await Actor.findById(req.params.id);
+        res.status(200).json(actor);
+    } catch (e) {
+        errorHandler(res, e);
+    }
 };
 
-module.exports.delete = (req, res) => {
-
+module.exports.delete = async (req, res) => {
+    try {
+        await Actor.remove(req.params.id);
+        res.status(200).json({
+            message: 'Позиция удалена'
+        });
+    } catch (e) {
+        errorHandler(res, e);
+    }
 };
 
-module.exports.create = (req, res) => {
-
+module.exports.create = async (req, res) => {
+    try {
+        const actor = await new Actor({
+            name: req.body.name,
+            surname: req.body.surname,
+            year: req.body.year
+        }).save();
+        res.status(200).json(actor);
+    } catch (e) {
+        errorHandler(res, e);
+    }
 };
 
-module.exports.update = (req, res) => {
-
+module.exports.update = async (req, res) => {
+    try {
+        const actor = await Actor.findOneAndUpdate(
+            {_id: req.params.id},
+            {$set: req.body},
+            {new: true}
+        );
+        res.status(200).json(actor);
+    } catch (e) {
+        errorHandler(res, e);
+    }
 };
