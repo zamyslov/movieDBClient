@@ -1,5 +1,5 @@
 module.exports.getAll = (req, res) => {
-
+    res.json({"message": "OK"});
 };
 
 module.exports.get = (req, res) => {
