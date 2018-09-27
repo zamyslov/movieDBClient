@@ -35,22 +35,31 @@ module.exports.create = async (req, res) => {
         const movie = await new Movie({
             name: req.body.name,
             year: req.body.year,
+            poster: req.file ? req.file.path : '',
             category: req.body.category.id
         }).save();
-        res.status(200).json(movie);
+        res.status(201).json(movie);
     } catch (e) {
         errorHandler(res, e);
     }
 };
 
 module.exports.update = async (req, res) => {
+    const updated = {
+        name: req.body.name,
+        year: req.body.year,
+        category: req.body.category.id
+    };
+    if (req.file) {
+        updated.photo = req.file.path
+    }
     try {
         const movie = await Movie.findOneAndUpdate(
             {_id: req.params.id},
-            {$set: req.body},
+            {$set: updated},
             {new: true}
         );
-        res.status(200).json(movie);
+        res.status(201).json(movie);
     } catch (e) {
         errorHandler(res, e);
     }

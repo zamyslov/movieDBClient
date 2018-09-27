@@ -35,7 +35,7 @@ module.exports.create = async (req, res) => {
         const category = await new Category({
             name: req.body.name,
         }).save();
-        res.status(200).json(category);
+        res.status(201).json(category);
     } catch (e) {
         errorHandler(res, e);
     }

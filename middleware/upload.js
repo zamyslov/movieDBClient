@@ -13,11 +13,11 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
-    if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg') {
+    // if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg') {
         cb(null, true);
-    } else {
-        cb(null, false);
-    }
+    // } else {
+    //     cb(null, false);
+    // }
 };
 
 const limits = {

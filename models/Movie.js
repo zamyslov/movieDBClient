@@ -10,6 +10,10 @@ const moviesSchema = new Schema({
         type: Number,
         required: true
     },
+    poster: {
+        type: String,
+        required: true
+    },
     category: {
         ref: 'categories',
         type: Schema.Types.ObjectId

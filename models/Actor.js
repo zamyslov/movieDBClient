@@ -10,6 +10,9 @@ const actorsSchema = new Schema({
         type: String,
         required: true
     },
+    photo: {
+        type: String
+    },
     year: {
         type: Number,
         required: true
