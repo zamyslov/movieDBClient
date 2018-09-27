@@ -4,7 +4,10 @@ const errorHandler = require('../utils/errorHandler');
 
 module.exports.getAll = async (req, res) => {
     try {
-        const actor = await Actor.find();
+        const actor = await Actor.find()
+            .sort({surname: +1})
+            .skip(+req.query.offset)
+            .limit(req.query.limit);
         res.status(200).json(actor);
     } catch (e) {
         errorHandler(res, e);

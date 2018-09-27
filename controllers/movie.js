@@ -3,7 +3,10 @@ const errorHandler = require('../utils/errorHandler');
 
 module.exports.getAll = async (req, res) => {
     try {
-        const movie = await Movie.find();
+        const movie = await Movie.find()
+            .sort({name: +1})
+            .skip(+req.query.offset)
+            .limit(req.query.limit);
         res.status(200).json(movie);
     } catch (e) {
         errorHandler(res, e);
