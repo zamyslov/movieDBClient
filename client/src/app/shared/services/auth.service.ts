@@ -3,6 +3,7 @@ import {User} from "../interfaces";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {tap} from "rxjs/operators";
+import decode from 'jwt-decode';
 
 @Injectable({
   providedIn: "root"
@@ -40,6 +41,14 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     return !!this.token;
+  }
+
+  isAdmin(): boolean {
+    if (this.isAuthenticated()) {
+      const tokenPayload = decode(this.token);
+      return tokenPayload.isAdmin;
+    }
+    return false;
   }
 
   logout() {

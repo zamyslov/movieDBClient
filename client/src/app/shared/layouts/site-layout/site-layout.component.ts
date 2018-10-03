@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
 import {MaterialService} from "../../classes/material.service";
@@ -8,7 +8,7 @@ import {MaterialService} from "../../classes/material.service";
   templateUrl: './site-layout.component.html',
   styleUrls: ['./site-layout.component.css']
 })
-export class SiteLayoutComponent implements AfterViewInit {
+export class SiteLayoutComponent implements AfterViewInit, OnInit {
 
   @ViewChild('floating') floatingRef: ElementRef;
 
@@ -17,6 +17,14 @@ export class SiteLayoutComponent implements AfterViewInit {
     {url: '/actors', name: 'Актеры'},
     {url: '/charts', name: 'Рейтинги'},
   ];
+
+  ngOnInit() {
+    if (this.auth.isAdmin()) {
+      this.links.push(
+        {url: '/admin/users', name: 'Пользователи'}
+      )
+    }
+  }
 
   constructor(private auth: AuthService,
               private router: Router) {

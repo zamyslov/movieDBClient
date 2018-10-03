@@ -38,6 +38,8 @@ export class LoginPageComponent implements OnInit, OnDestroy {
         MaterialService.toast('Авторизируйтесь в системе');
       } else if (params['sessionFailed']) {
         MaterialService.toast('Заново авторизируйтесь в системе');
+      } else if (params['isNotAdmin']) {
+        MaterialService.toast('Требуются права администратора');
       }
     })
   }
@@ -45,7 +47,10 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.form.disable();
     this.aSub = this.auth.login(this.form.value).subscribe(
-      () => this.router.navigate(['/overview']),
+      () => {
+        this.router.navigate(['/overview']);
+        MaterialService.toast(''+this.auth.isAdmin());
+      },
       error => {
         MaterialService.toast(error.error.message);
         this.form.enable();

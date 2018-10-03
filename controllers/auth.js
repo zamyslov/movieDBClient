@@ -11,6 +11,7 @@ module.exports.login = async function (req, res) {
         if (passwordResult) {
             const token = jwt.sign({
                 login: candidate.login,
+                isAdmin: candidate.isAdmin,
                 userId: candidate._id
             }, keys.jwt, {expiresIn: 60 * 60});
             res.status(201).json({
