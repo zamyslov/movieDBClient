@@ -42,5 +42,16 @@
       [disabled]="form.invalid || form.disabled"
     >Войти
     </button>
+    <p></p>
+    <button
+      class="modal-action btn waves-effect"
+      (click)="setField('user')"
+    >Войти как User
+    </button>
+    <button
+      class="modal-action btn waves-effect"
+      (click)="setField('Admin')"
+    >Войти как Admin
+    </button>
   </div>
 </form>

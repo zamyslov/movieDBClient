@@ -21,7 +21,8 @@ export class SiteLayoutComponent implements AfterViewInit, OnInit {
   ngOnInit() {
     if (this.auth.isAdmin()) {
       this.links.push(
-        {url: '/admin/users', name: 'Пользователи'}
+        {url: '/admin/users', name: 'Пользователи'},
+        {url: '/admin/categories', name: 'Категории'}
       )
     }
   }

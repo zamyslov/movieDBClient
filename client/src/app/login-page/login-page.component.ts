@@ -49,12 +49,17 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     this.aSub = this.auth.login(this.form.value).subscribe(
       () => {
         this.router.navigate(['/overview']);
-        MaterialService.toast(''+this.auth.isAdmin());
+        MaterialService.toast('' + this.auth.isAdmin());
       },
       error => {
         MaterialService.toast(error.error.message);
         this.form.enable();
       }
     )
+  }
+
+  setField(name: string) {
+    this.form.controls.login.setValue(name);
+    this.form.controls.password.setValue('123');
   }
 }

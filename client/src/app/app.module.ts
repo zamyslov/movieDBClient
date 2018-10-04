@@ -11,6 +11,11 @@ import {RegisterPageComponent} from './register-page/register-page.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {TokenInterceptor} from "./shared/classes/token.interceptor";
 import { OverviewPageComponent } from './overview-page/overview-page.component';
+import { MoviesPageComponent } from './movies-page/movies-page.component';
+import { ActorsPageComponent } from './actors-page/actors-page.component';
+import { CategoriesPageComponent } from './categories-page/categories-page.component';
+import { UsersPageComponent } from './users-page/users-page.component';
+import { LoaderComponent } from './shared/components/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +24,12 @@ import { OverviewPageComponent } from './overview-page/overview-page.component';
     AuthLayoutComponent,
     SiteLayoutComponent,
     RegisterPageComponent,
-    OverviewPageComponent
+    OverviewPageComponent,
+    MoviesPageComponent,
+    ActorsPageComponent,
+    CategoriesPageComponent,
+    UsersPageComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
