@@ -2,7 +2,7 @@
   <h4>Категории</h4>
   <button
     class="waves-effect waves-light btn grey darken-1"
-    routerLink="/categories/new"
+    (click)="onAddCategory()"
   >Добавить категорию
   </button>
 </div>
@@ -29,3 +29,21 @@
 <ng-template #empty>
   У вас нет категорий
 </ng-template>
+
+<div class="modal" #modal>
+  <div class="modal-content">
+    <h4 class="mb1">Добавить позицию</h4>
+    <div class="input-field">
+      <input id="pos-name" type="text" required>
+      <label for="pos-name">Название</label>
+    </div>
+    <div class="input-field">
+      <input id="pos-cost" type="text" required>
+      <label for="pos-cost">Цена</label>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-action waves-effect waves-black btn-flat">Отмена</a>
+    <button class="modal-action btn waves-effect">Сохранить</button>
+  </div>
+</div>
