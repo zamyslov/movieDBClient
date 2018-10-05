@@ -20,6 +20,8 @@ const routes: Routes = [
     ]},
   {path: 'admin', component: SiteLayoutComponent, canActivate: [AuthAdminGuard], children: [
       {path: 'categories', component: CategoriesPageComponent},
+      {path: 'categories/new', component: CategoriesPageComponent},
+      {path: 'categories/:id', component: CategoriesPageComponent},
       {path: 'users', component: UsersPageComponent}
     ]},
   {path: '', component: SiteLayoutComponent, canActivate: [AuthGuard], children: [

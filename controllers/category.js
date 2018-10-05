@@ -40,3 +40,19 @@ module.exports.create = async (req, res) => {
         errorHandler(res, e);
     }
 };
+
+module.exports.update = async (req, res) => {
+    const updated = {
+        name: req.body.name,
+    };
+    try {
+        const category = await Category.findOneAndUpdate(
+            {_id: req.params.id},
+            {$set: updated},
+            {new: true}
+        );
+        res.status(201).json(category);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};

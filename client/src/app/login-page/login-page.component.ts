@@ -5,6 +5,8 @@ import {Subscription} from "rxjs/internal/Subscription";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {MaterialService} from "../shared/classes/material.service";
 
+declare var M;
+
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
@@ -49,7 +51,6 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     this.aSub = this.auth.login(this.form.value).subscribe(
       () => {
         this.router.navigate(['/overview']);
-        MaterialService.toast('' + this.auth.isAdmin());
       },
       error => {
         MaterialService.toast(error.error.message);
@@ -61,5 +62,6 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   setField(name: string) {
     this.form.controls.login.setValue(name);
     this.form.controls.password.setValue('123');
+    MaterialService.updateTextFields();
   }
 }

@@ -18,6 +18,10 @@ export class MaterialService {
   }
 
   static initModal(ref: ElementRef): MaterialInstance {
-    return M.Modal.init(ref.nativeElement);
+    return M.Modal.init(ref.nativeElement, {dismissible: false});
+  }
+
+  static updateTextFields() {
+    M.updateTextFields();
   }
 }

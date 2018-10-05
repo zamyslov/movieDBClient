@@ -14,7 +14,6 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
   form: FormGroup;
   aSub: Subscription;
 
-
   constructor(private auth: AuthService,
               private router: Router) {
   }
@@ -31,7 +30,6 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
       'password': new FormControl(null, [Validators.required, Validators.minLength(3)]),
       'name': new FormControl(null, [Validators.required])
     });
-
   }
 
   onSubmit() {
@@ -47,7 +45,5 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
         this.form.enable();
       }
     )
-
   }
-
 }

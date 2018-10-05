@@ -7,5 +7,7 @@ router.get('/', passport.authenticate('jwt', {session: false}), controller.getAl
 router.post('/', controller.create);
 router.get('/:id', controller.getById);
 router.delete('/:id', controller.delete);
+router.patch('/:id', controller.update);
+
 
 module.exports = router;
