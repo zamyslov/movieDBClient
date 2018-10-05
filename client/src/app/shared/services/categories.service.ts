@@ -12,23 +12,23 @@ export class CategoriesService {
   }
 
   getAll(): Observable<Category[]> {
-    return this.http.get<Category[]>('/api/category')
+    return this.http.get<Category[]>('/api/admin/category')
   }
 
   getById(id: string): Observable<Category> {
-    return this.http.get<Category>(`/api/category/${id}`)
+    return this.http.get<Category>(`/api/admin/category/${id}`)
   }
 
   create(category: Category): Observable<Category> {
-    return this.http.post<Category>(`/api/category`, category)
+    return this.http.post<Category>(`/api/admin/category`, category)
   }
 
   update(category: Category): Observable<Category> {
-    return this.http.patch<Category>(`/api/category/${category._id}`, category)
+    return this.http.patch<Category>(`/api/admin/category/${category._id}`, category)
   }
 
   delete(category: Category): Observable<Category> {
-    return this.http.delete<Category>(`/api/category/${category._id}`)
+    return this.http.delete<Category>(`/api/admin/category/${category._id}`)
   }
 
 }
