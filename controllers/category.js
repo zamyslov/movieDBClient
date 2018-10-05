@@ -21,7 +21,7 @@ module.exports.getById = async (req, res) => {
 
 module.exports.delete = async (req, res) => {
     try {
-        await Category.remove(req.params.id);
+        await Category.findByIdAndRemove(req.params.id);
         res.status(200).json({
             message: 'Позиция удалена'
         });

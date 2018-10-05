@@ -72,6 +72,18 @@ export class CategoriesPageComponent implements OnInit, OnDestroy, AfterViewInit
     );
   }
 
+  onDelete() {
+    this.categoriesService.delete(this.category).subscribe(
+      () => {
+        this.categories$ = this.categoriesService.getAll();
+        this.form.reset();
+        this.modal.close();
+        this.category = null;
+      },
+      error => MaterialService.toast(error.error.message)
+    )
+  }
+
   onCancel() {
     this.form.reset();
     this.modal.close();

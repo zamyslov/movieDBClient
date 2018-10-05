@@ -44,11 +44,20 @@
       </div>
     </div>
     <div class="modal-footer">
+      <div *ngIf="category">
+        <button class="btn btn-small red left">
+          <i
+            class="material-icons"
+            (click)="onDelete()"
+          >delete</i>
+        </button>
+      </div>
       <a (click)="onCancel()" class="modal-action waves-effect waves-black btn-flat">Отмена</a>
       <button
         class="modal-action btn waves-effect"
         type="submit"
-      >Сохранить</button>
+      >Сохранить
+      </button>
     </div>
   </div>
 </form>
