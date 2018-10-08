@@ -11,6 +11,7 @@ import {ActorsPageComponent} from "./actors-page/actors-page.component";
 import {AuthAdminGuard} from "./shared/classes/auth-admin.guard";
 import {CategoriesPageComponent} from "./categories-page/categories-page.component";
 import {UsersPageComponent} from "./users-page/users-page.component";
+import {MoviesInfoComponent} from "./movies-page/movies-info/movies-info.component";
 
 const routes: Routes = [
   {path: '', component: AuthLayoutComponent, children: [
@@ -27,6 +28,7 @@ const routes: Routes = [
   {path: '', component: SiteLayoutComponent, canActivate: [AuthGuard], children: [
       {path: 'overview', component: OverviewPageComponent},
       {path: 'movies', component: MoviesPageComponent},
+      {path: 'movies/:id', component: MoviesInfoComponent},
       {path: 'actors', component: ActorsPageComponent}
     ]}
 ];

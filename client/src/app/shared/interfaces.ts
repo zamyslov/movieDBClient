@@ -3,12 +3,19 @@ export interface User {
   password: string
   name?: string
 }
+export interface Actor {
+  name: string,
+  surname: string
+  year: number
+}
 
 export interface Movie {
   name: string,
   year: number,
+  about: string,
   poster?: string,
   category: Category,
+  list: Actor[],
   _id?: string
 }
 

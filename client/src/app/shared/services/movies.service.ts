@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Movie} from "../interfaces";
+import {Category, Movie} from "../interfaces";
 import {Observable} from "rxjs/internal/Observable";
 
 @Injectable({
@@ -14,5 +14,10 @@ export class MoviesService {
   getAll(): Observable<Movie[]> {
     return this.http.get<Movie[]>('/api/movie')
   }
+
+  getById(id: string): Observable<Movie> {
+    return this.http.get<Movie>(`/api/movie/${id}`)
+  }
+
 
 }

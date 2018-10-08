@@ -16,6 +16,7 @@ import { ActorsPageComponent } from './actors-page/actors-page.component';
 import { CategoriesPageComponent } from './categories-page/categories-page.component';
 import { UsersPageComponent } from './users-page/users-page.component';
 import { LoaderComponent } from './shared/components/loader/loader.component';
+import { MoviesInfoComponent } from './movies-page/movies-info/movies-info.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { LoaderComponent } from './shared/components/loader/loader.component';
     ActorsPageComponent,
     CategoriesPageComponent,
     UsersPageComponent,
-    LoaderComponent
+    LoaderComponent,
+    MoviesInfoComponent
   ],
   imports: [
     BrowserModule,

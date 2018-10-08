@@ -11,8 +11,10 @@ const moviesSchema = new Schema({
         required: true
     },
     poster: {
-        type: String,
-        required: true
+        type: String
+    },
+    about: {
+        type: String
     },
     category: {
         ref: 'categories',
