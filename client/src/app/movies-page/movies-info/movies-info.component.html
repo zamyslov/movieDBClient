@@ -11,7 +11,7 @@
     <div class="col s12 m7">
       <div class="card horizontal">
         <div class="card-image">
-          <img src="/uploads/27092018-122345_337-Sleep.jpg">
+          <img src="{{movie.poster}}">
         </div>
         <div class="card-stacked">
           <div class="card-content">
@@ -34,7 +34,7 @@
   </div>
   <ul class="collection" *ngFor="let actor of movie.list">
   <li class="collection-item avatar">
-  <img src="/uploads/27092018-122345_337-Sleep.jpg" alt="" class="circle">
+  <img src="{{actor.photo}}" alt="" class="circle">
   <span class="title">{{actor.surname}} {{actor.name}}</span>
   <p>{{actor.year}} <br>
   </p>

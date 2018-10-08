@@ -7,6 +7,7 @@ export interface Actor {
   name: string,
   surname: string
   year: number
+  photo?: string,
 }
 
 export interface Movie {
