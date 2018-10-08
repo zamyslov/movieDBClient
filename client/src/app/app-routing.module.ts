@@ -12,6 +12,7 @@ import {AuthAdminGuard} from "./shared/classes/auth-admin.guard";
 import {CategoriesPageComponent} from "./categories-page/categories-page.component";
 import {UsersPageComponent} from "./users-page/users-page.component";
 import {MoviesInfoComponent} from "./movies-page/movies-info/movies-info.component";
+import {ActorsInfoComponent} from "./actors-page/actors-info/actors-info.component";
 
 const routes: Routes = [
   {path: '', component: AuthLayoutComponent, children: [
@@ -29,7 +30,8 @@ const routes: Routes = [
       {path: 'overview', component: OverviewPageComponent},
       {path: 'movies', component: MoviesPageComponent},
       {path: 'movies/:id', component: MoviesInfoComponent},
-      {path: 'actors', component: ActorsPageComponent}
+      {path: 'actors', component: ActorsPageComponent},
+      {path: 'actors/:id', component: ActorsInfoComponent}
     ]}
 ];
 

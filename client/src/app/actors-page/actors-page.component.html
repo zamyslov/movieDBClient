@@ -1,3 +1,34 @@
-<p>
-  actors-page works!
-</p>
+<div class="page-title">
+  <h4>Актеры</h4>
+  <button *ngIf="isAdmin"
+          class="waves-effect waves-light btn grey darken-1"
+          (click)="onAddActor()"
+  >Добавить актера
+  </button>
+</div>
+<div
+  class="frow order-row"
+  *ngIf="actors$ | async as actors; else loader"
+>
+  <div *ngIf="actors.empty !== 0; else empty">
+    <div
+      class="card waves-effect pointer"
+      *ngFor="let actor of actors"
+      [routerLink] = "['/actors', actor._id]"
+    >
+      <div class="center">
+        <img src="{{actor.photo}}" class="responsive-img order-img">
+      </div>
+      <div class="card-content center p10">
+        <h5 class="m0">{{actor.name}} {{actor.surname}}</h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>
+<ng-template #empty>
+  У вас нет фильмов
+</ng-template>

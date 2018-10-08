@@ -8,6 +8,7 @@ export interface Actor {
   surname: string
   year: number
   photo?: string,
+  _id?: string
 }
 
 export interface Movie {
