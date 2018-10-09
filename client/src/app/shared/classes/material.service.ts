@@ -17,6 +17,10 @@ export class MaterialService {
     M.FloatingActionButton.init(ref.nativeElement);
   }
 
+  static initializeMultiSelect(ref: ElementRef) {
+    M.FormSelect.init(ref.nativeElement);
+  }
+
   static initModal(ref: ElementRef): MaterialInstance {
     return M.Modal.init(ref.nativeElement, {dismissible: false});
   }
