@@ -5,23 +5,25 @@
       <i class="material-icons">keyboard_arrow_right</i>
       Добавить фильм
     </h4>
+    <button
+      class="modal-action btn waves-effect"
+      type="submit"
+      [disabled]="form.invalid || form.disabled"
+    >Сохранить фильм
+    </button>
   </div>
   <br>
   <div class="row">
-    <div class="input-field col s6">
-      <input id="name" type="text" class="validate">
-      <label for="name">название фильма</label>
-    </div>
-    <div class="col s12 m7">
+    <div class="col s4">
       <div class="card">
-        <div class="card-image waves-effect waves-block waves-light">
+        <div class="card-image">
           <img
             class="activator"
             [src]='imagePreview'
             *ngIf="imagePreview"
           >
         </div>
-        <div class="card-content">
+        <div class="card-action">
           <input
             type="file"
             class="dn"
@@ -32,10 +34,49 @@
             (click)="triggerClick()"
           >
             <i class="material-icons left">backup</i>
-            Загрузить постер
+            Постер
           </button>
         </div>
       </div>
+    </div>
+    <div class="input-field col s4">
+      <input
+        id="name"
+        type="text"
+        formControlName="name"
+        [ngClass]="{invalid:form.get('name').invalid && form.get('name').touched}"
+      >
+      <label for="name">название фильма</label>
+      <span class="helper-text red-text"
+            *ngIf="form.get('name').touched"
+      >
+        <span *ngIf="form.get('name').errors !== null && form.get('name').errors['required']">Название фильма должно быть заполнено</span>
+      </span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s3">
+      <input
+        id="year"
+        type="number"
+        formControlName="year"
+      >
+      <label for="name">Год выхода фильма</label>
+    </div>
+    <div class="input-field col s4">
+      <select
+        #selectCategories
+        class="icons"
+        formControlName="category"
+      >
+        <option
+          *ngFor="let category of categories"
+          value="{{category._id}}"
+          class="left"
+        >
+          {{category.name}}
+        </option>
+      </select>
     </div>
   </div>
   <div class="row">
@@ -44,31 +85,44 @@
         <div class="card-content black-text">
           <span class="card-title">Сюжет</span>
           <div class="input-field">
-            <textarea id="textarea1" class="materialize-textarea"></textarea>
+            <textarea
+              id="textarea"
+              class="materialize-textarea"
+              formControlName="about"
+            ></textarea>
+            <span class="helper-text red-text"
+                  *ngIf="form.get('about').touched"
+            >
+            <span *ngIf="form.get('about').errors !== null && form.get('about').errors['required']">Сюжет фильма должен быть заполнен</span>
+            </span>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="input-field col s12">
-    <select
-      #select
-      multiple class="icons"
-    >
-      <option
-        *ngFor="let actor of actors"
-        value="{{actor._id}}"
-        data-icon=""
-        class="left"
-      >
-        {{actor.surname}} {{actor.name}}
-      </option>
-    </select>
+  <div class="row">
+    <div class="col s12 m12">
+      <div class="card">
+        <div class="card-content black-text">
+          <span class="card-title">В ролях</span>
+          <div class="input-field">
+            <select
+              #selectActors
+              multiple class="icons"
+              formControlName="actors"
+            >
+              <option
+                *ngFor="let actor of actors"
+                value="{{actor._id}}"
+                data-icon=""
+                class="left"
+              >
+                {{actor.surname}} {{actor.name}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </form>
-<ng-template #loader>
-  <app-loader></app-loader>
-</ng-template>
-<ng-template #empty>
-  У вас нет фильмов
-</ng-template>

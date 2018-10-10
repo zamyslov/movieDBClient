@@ -20,6 +20,7 @@ import { MoviesInfoComponent } from './movies-page/movies-info/movies-info.compo
 import { ActorsInfoComponent } from './actors-page/actors-info/actors-info.component';
 import { MoviesAddComponent } from './movies-page/movies-add/movies-add.component';
 import {ActorsListResolve} from "./shared/actors-list.resolve";
+import {CategoriesListResolve} from "./shared/categories-list.resolve";
 
 @NgModule({
   declarations: [
@@ -49,7 +50,7 @@ import {ActorsListResolve} from "./shared/actors-list.resolve";
     provide: HTTP_INTERCEPTORS,
     multi: true,
     useClass: TokenInterceptor
-  }, ActorsListResolve],
+  }, ActorsListResolve, CategoriesListResolve],
   bootstrap: [AppComponent]
 })
 export class AppModule {

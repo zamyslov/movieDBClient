@@ -38,6 +38,7 @@ module.exports.create = async (req, res) => {
         const movie = await new Movie({
             name: req.body.name,
             year: req.body.year,
+            about: req.body.about,
             poster: req.file ? req.file.path : '',
             category: req.body.category.id
         }).save();

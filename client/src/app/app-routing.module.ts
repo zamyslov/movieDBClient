@@ -15,27 +15,38 @@ import {MoviesInfoComponent} from "./movies-page/movies-info/movies-info.compone
 import {ActorsInfoComponent} from "./actors-page/actors-info/actors-info.component";
 import {MoviesAddComponent} from "./movies-page/movies-add/movies-add.component";
 import {ActorsListResolve} from "./shared/actors-list.resolve";
+import {CategoriesListResolve} from "./shared/categories-list.resolve";
 
 const routes: Routes = [
-  {path: '', component: AuthLayoutComponent, children: [
+  {
+    path: '', component: AuthLayoutComponent, children: [
       {path: '', redirectTo: '/login', pathMatch: 'full'},
       {path: 'login', component: LoginPageComponent},
       {path: 'registration', component: RegisterPageComponent}
-    ]},
-  {path: 'admin', component: SiteLayoutComponent, canActivate: [AuthAdminGuard], children: [
+    ]
+  },
+  {
+    path: 'admin', component: SiteLayoutComponent, canActivate: [AuthAdminGuard], children: [
       {path: 'categories', component: CategoriesPageComponent},
       {path: 'categories/new', component: CategoriesPageComponent},
       {path: 'categories/:id', component: CategoriesPageComponent},
-      {path: 'movies/new', component: MoviesAddComponent, resolve: {actors: ActorsListResolve}},
+      {
+        path: 'movies/new',
+        component: MoviesAddComponent,
+        resolve: {actors: ActorsListResolve, category: CategoriesListResolve}
+      },
       {path: 'users', component: UsersPageComponent}
-    ]},
-  {path: '', component: SiteLayoutComponent, canActivate: [AuthGuard], children: [
+    ]
+  },
+  {
+    path: '', component: SiteLayoutComponent, canActivate: [AuthGuard], children: [
       {path: 'overview', component: OverviewPageComponent},
       {path: 'movies', component: MoviesPageComponent},
       {path: 'movies/:id', component: MoviesInfoComponent},
       {path: 'actors', component: ActorsPageComponent},
       {path: 'actors/:id', component: ActorsInfoComponent}
-    ]}
+    ]
+  }
 ];
 
 @NgModule({

@@ -21,6 +21,12 @@ export class MaterialService {
     M.FormSelect.init(ref.nativeElement);
   }
 
+  static initializeDatePicker(ref: ElementRef) {
+    M.Datepicker.init(ref.nativeElement, {
+      format: 'yyyy'
+    });
+  }
+
   static initModal(ref: ElementRef): MaterialInstance {
     return M.Modal.init(ref.nativeElement, {dismissible: false});
   }
