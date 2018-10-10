@@ -8,6 +8,10 @@
   </div>
   <br>
   <div class="row">
+    <div class="input-field col s6">
+      <input id="name" type="text" class="validate">
+      <label for="name">название фильма</label>
+    </div>
     <div class="col s12 m7">
       <div class="card">
         <div class="card-image waves-effect waves-block waves-light">
@@ -47,11 +51,24 @@
     </div>
   </div>
   <div class="input-field col s12">
-    <select multiple class="icons" #select>
-      <option value="" disabled selected>Выберите актеров</option>
-      <option value="" data-icon="uploads\\Leonardo_DiCaprio.jpg" class="left">example 1</option>
-      <option value="" data-icon="uploads\\Leonardo_DiCaprio.jpg" class="left">example 1</option>
-      <option value="" data-icon="uploads\\Leonardo_DiCaprio.jpg" class="left">example 1</option>
+    <select
+      #select
+      multiple class="icons"
+    >
+      <option
+        *ngFor="let actor of actors"
+        value="{{actor._id}}"
+        data-icon=""
+        class="left"
+      >
+        {{actor.surname}} {{actor.name}}
+      </option>
     </select>
   </div>
 </form>
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>
+<ng-template #empty>
+  У вас нет фильмов
+</ng-template>
