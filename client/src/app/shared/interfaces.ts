@@ -17,7 +17,7 @@ export interface Movie {
   about: string,
   poster?: string,
   category: Category,
-  list: Actor[],
+  actors: any,
   _id?: string
 }
 

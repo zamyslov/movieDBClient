@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Category, Movie} from "../interfaces";
+import {Actor, Category, Movie} from "../interfaces";
 import {Observable} from "rxjs/internal/Observable";
 
 @Injectable({
@@ -19,8 +19,18 @@ export class MoviesService {
     return this.http.get<Movie>(`/api/movie/${id}`)
   }
 
-  create(movie: Movie): Observable<Movie> {
-    return this.http.post<Movie>(`/api/admin/movies`, movie)
+  create(name: string, year: number, about: string, category: Category, actors: any, image?: File): Observable<Movie> {
+    const fd = new FormData();
+    if (image) {
+      fd.append("image", image, image.name);
+    }
+    fd.append("name", name);
+    fd.append("year", ''+year);
+    fd.append("about", about);
+    fd.append("category", JSON.stringify(category));
+    fd.append("actors", JSON.stringify(actors));
+    console.log(actors);
+    return this.http.post<Movie>(`/api/admin/movie`, fd)
   }
 
 }

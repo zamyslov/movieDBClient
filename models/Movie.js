@@ -20,12 +20,10 @@ const moviesSchema = new Schema({
         ref: 'categories',
         type: Schema.Types.ObjectId
     },
-    list: [
+    actors: [
         {
-            id: {
-                ref: 'actors',
-                type: Schema.Types.ObjectId
-            }
+            ref: 'actors',
+            type: Schema.Types.ObjectId
         }
     ]
 });

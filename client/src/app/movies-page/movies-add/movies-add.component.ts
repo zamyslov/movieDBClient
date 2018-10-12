@@ -1,9 +1,8 @@
-import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {MaterialService} from "../../shared/classes/material.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Actor, Category, Movie} from "../../shared/interfaces";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Subscription} from "rxjs/internal/Subscription";
 import {MoviesService} from "../../shared/services/movies.service";
 import {ActorsService} from "../../shared/services/actors.service";
 import {CategoriesService} from "../../shared/services/categories.service";
@@ -15,7 +14,7 @@ declare var M;
   templateUrl: './movies-add.component.html',
   styleUrls: ['./movies-add.component.css']
 })
-export class MoviesAddComponent implements OnInit, OnDestroy, AfterViewInit {
+export class MoviesAddComponent implements OnInit, AfterViewInit {
 
   @ViewChild('selectActors') selectActorsRef: ElementRef;
   @ViewChild('selectCategories') selectCategoriesRef: ElementRef;
@@ -23,10 +22,10 @@ export class MoviesAddComponent implements OnInit, OnDestroy, AfterViewInit {
   form: FormGroup;
   image: File;
   imagePreview = '';
-  actors: Actor[];
-  aSub: Subscription;
   category: Category;
   categories: Category[];
+  actorsList: Actor[] = [];
+  actors: Actor[] = [];
 
 
   constructor(private moviesService: MoviesService,
@@ -46,16 +45,12 @@ export class MoviesAddComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.route.data
       .subscribe((data: { actors: Actor[] }) => {
-        this.actors = data.actors;
+        this.actorsList = data.actors;
       });
     this.route.data
       .subscribe((data: { category: Category[] }) => {
         this.categories = data.category;
       });
-  }
-
-  ngOnDestroy(): void {
-    this.aSub.unsubscribe();
   }
 
   ngAfterViewInit() {
@@ -76,43 +71,45 @@ export class MoviesAddComponent implements OnInit, OnDestroy, AfterViewInit {
       this.imagePreview = reader.result;
     };
     reader.readAsDataURL(file);
+  }
 
+  onCategoryChange() {
+    this.categoryService.getById('' + this.form.value['category']).subscribe(
+      (value) => {
+        this.category = value;
+      }
+    );
+  }
+
+  onActorsChange() {
+    this.actors = [];
+    this.form.value['actors'].forEach((id) => this.actorService.getById(id)
+      .subscribe((actor: Actor) => {
+        this.actors.push(actor);
+      }));
   }
 
   onSubmit() {
     this.form.disable();
-    let actors = [];
-    this.form.value['actors'].forEach((id) => this.actorService.getById(id)
-      .subscribe((actor) => {
-        actors.push(actor);
-      }));
-    this.categoryService.getById(''+this.form.value['category']).subscribe(
-      (cat) => {
-        console.log(cat);
-        this.category = cat;
+    console.log(this.actors);
+    this.moviesService.create(
+      this.form.value['name'],
+      this.form.value['year'],
+      this.form.value['about'],
+      this.category,
+      this.actors,
+      this.image
+    ).subscribe(
+      () => this.router.navigate(['/movies'], {
+        queryParams: {
+          added: true
+        }
+      }),
+      error => {
+        MaterialService.toast(error.error.message);
       }
     );
-    console.log(''+this.form.value['category']);
-    console.log(actors);
-    console.log(this.category);
-    // const movie: Movie = {
-    //   name: this.form.value['name'],
-    //   year: this.form.value['year'],
-    //   about: this.form.value['about'],
-    //   category: this.form.value['category'],
-    //   list: this.form.value['actors']
-    // };
-    // this.aSub = this.moviesService.create(movie).subscribe(
-    //   () => this.router.navigate(['/movies'], {
-    //     queryParams: {
-    //       added: true
-    //     }
-    //   }),
-    //   error => {
-    //     MaterialService.toast(error.error.message);
-    //     this.form.enable();
-    //   }
-    // )
+    this.form.enable();
   }
 
 }

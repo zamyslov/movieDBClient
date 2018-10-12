@@ -68,6 +68,7 @@
         #selectCategories
         class="icons"
         formControlName="category"
+        (change)="onCategoryChange()"
       >
         <option
           *ngFor="let category of categories"
@@ -110,9 +111,10 @@
               #selectActors
               multiple class="icons"
               formControlName="actors"
+              (change)="onActorsChange()"
             >
               <option
-                *ngFor="let actor of actors"
+                *ngFor="let actor of actorsList"
                 value="{{actor._id}}"
                 data-icon=""
                 class="left"

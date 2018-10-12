@@ -26,6 +26,7 @@ app.use(require('cors')());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/movie', movieRoutes);
+app.use('/api/admin/movie', movieRoutes);
 app.use('/api/actor', actorRoutes);
 app.use('/api/admin/category', categoryRoutes);
 

@@ -32,8 +32,8 @@
       </div>
     </div>
   </div>
-  <ul class="collection" *ngFor="let actor of movie.list">
-    <li class="collection-item avatar">
+  <ul class="collection" *ngIf="movie.actors.length > 0; else loader">
+    <li class="collection-item avatar" *ngFor="let actor of movie.actors">
       <img src="{{actor.photo}}" alt="" class="circle">
       <span class="title">{{actor.surname}} {{actor.name}}</span>
       <p>{{actor.year}} <br>

@@ -33,15 +33,15 @@ export class MoviesInfoComponent implements OnInit {
           }
         )
       )
-      .subscribe(
-        (movie: Movie) => {
+      .subscribe((movie: Movie) => {
           if (movie) {
             this.movie = movie;
-            this.movie.list.forEach((obj) => this.actorService.getById('' + obj['id'])
-              .subscribe((actor) => {
-                this.actors.push(actor);
+            const array = this.movie.actors;
+            this.movie.actors = [];
+            array.forEach((id: string) => this.actorService.getById(id)
+              .subscribe((actor: Actor) => {
+                this.movie.actors.push(actor);
               }));
-            this.movie.list = this.actors;
           }
         },
         error => MaterialService.toast(error.error.message)

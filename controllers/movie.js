@@ -35,12 +35,14 @@ module.exports.delete = async (req, res) => {
 
 module.exports.create = async (req, res) => {
     try {
+        console.log(req.body);
         const movie = await new Movie({
             name: req.body.name,
             year: req.body.year,
             about: req.body.about,
             poster: req.file ? req.file.path : '',
-            category: req.body.category.id
+            category: req.body.category.id,
+            actors: JSON.parse(req.body.actors)
         }).save();
         res.status(201).json(movie);
     } catch (e) {

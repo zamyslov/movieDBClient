@@ -18,6 +18,4 @@ export class ActorsService {
   getById(id: string): Observable<Actor> {
     return this.http.get<Actor>(`/api/actor/${id}`)
   }
-
-
 }
