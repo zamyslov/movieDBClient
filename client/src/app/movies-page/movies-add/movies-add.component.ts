@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {MaterialService} from "../../shared/classes/material.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Actor, Category, Movie} from "../../shared/interfaces";
+import {Actor, Category} from "../../shared/interfaces";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MoviesService} from "../../shared/services/movies.service";
 import {ActorsService} from "../../shared/services/actors.service";

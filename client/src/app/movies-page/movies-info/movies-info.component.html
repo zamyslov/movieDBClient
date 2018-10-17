@@ -5,8 +5,14 @@
       <i class="material-icons">keyboard_arrow_right</i>
       {{movie.name}}
     </h4>
+    <button
+      class="btn btn-small red"
+      (click)="deleteMovie(movie._id)"
+    >
+      <i class="material-icons left">delete_forever</i>
+      Удалить
+    </button>
   </div>
-
   <div class="row">
     <div class="col s12 m7">
       <div class="card horizontal card-font">

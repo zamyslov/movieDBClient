@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Actor, Movie} from "../../shared/interfaces";
 import {switchMap} from "rxjs/operators";
-import {ActivatedRoute, Params} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {MoviesService} from "../../shared/services/movies.service";
 import {of} from "rxjs/internal/observable/of";
 import {MaterialService} from "../../shared/classes/material.service";
@@ -18,7 +18,8 @@ export class MoviesInfoComponent implements OnInit {
 
   constructor(private moviesService: MoviesService,
               private actorService: ActorsService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -46,6 +47,15 @@ export class MoviesInfoComponent implements OnInit {
         },
         error => MaterialService.toast(error.error.message)
       );
+  }
+
+  deleteMovie(id: string) {
+    this.moviesService.delete(id).subscribe(
+      () => this.router.navigate(['/movies']),
+      error => {
+        MaterialService.toast(error.error.message);
+      }
+    );
   }
 
 }

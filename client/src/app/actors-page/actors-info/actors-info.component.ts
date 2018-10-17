@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Params} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {Actor, Movie} from "../../shared/interfaces";
 import {of} from "rxjs/internal/observable/of";
 import {MaterialService} from "../../shared/classes/material.service";
@@ -15,7 +15,8 @@ export class ActorsInfoComponent implements OnInit {
   actor: Actor;
 
   constructor( private actorService: ActorsService,
-               private route: ActivatedRoute) { }
+               private route: ActivatedRoute,
+               private router: Router) { }
 
   ngOnInit() {
     this.route.params
@@ -37,6 +38,15 @@ export class ActorsInfoComponent implements OnInit {
         },
         error => MaterialService.toast(error.error.message)
       );
+  }
+
+  deleteActor(id: string) {
+    this.actorService.delete(id).subscribe(
+      () => this.router.navigate(['/actors']),
+      error => {
+        MaterialService.toast(error.error.message);
+      }
+    );
   }
 
 }

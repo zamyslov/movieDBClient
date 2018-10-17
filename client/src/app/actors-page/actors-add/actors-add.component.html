@@ -1,0 +1,88 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="page-title">
+    <h4>
+      <a [routerLink]="['/actors']">Актеры</a>
+      <i class="material-icons">keyboard_arrow_right</i>
+      Добавить актера
+    </h4>
+    <button
+      class="modal-action btn waves-effect"
+      type="submit"
+      [disabled]="form.invalid || form.disabled"
+    >Сохранить актера
+    </button>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col s4">
+      <div class="card">
+        <div class="card-image">
+          <img
+            class="activator"
+            [src]='imagePreview'
+            *ngIf="imagePreview"
+          >
+        </div>
+        <div class="card-action">
+          <input
+            type="file"
+            class="dn"
+            (change)="onFileUpload($event)"
+            #input>
+          <button
+            class="waves-effect waves-light btn"
+            (click)="triggerClick()"
+          >
+            <i class="material-icons left">backup</i>
+            Фото
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s4">
+      <input
+        id="surname"
+        type="text"
+        formControlName="surname"
+        [ngClass]="{invalid:form.get('surname').invalid && form.get('surname').touched}"
+      >
+      <label for="name">Фамилия</label>
+      <span class="helper-text red-text"
+            *ngIf="form.get('surname').touched"
+      >
+        <span *ngIf="form.get('surname').errors !== null && form.get('surname').errors['required']">Фамилия должна быть заполнено</span>
+      </span>
+    </div>
+    <div class="input-field col s4">
+      <input
+        id="name"
+        type="text"
+        formControlName="name"
+        [ngClass]="{invalid:form.get('name').invalid && form.get('name').touched}"
+      >
+      <label for="name">Имя</label>
+      <span class="helper-text red-text"
+            *ngIf="form.get('name').touched"
+      >
+        <span
+          *ngIf="form.get('name').errors !== null && form.get('name').errors['required']">Имя должно быть заполнено</span>
+      </span>
+    </div>
+    <div class="input-field col s4">
+      <input
+        id="year"
+        type="number"
+        formControlName="year"
+        [ngClass]="{invalid:form.get('year').invalid && form.get('year').touched}"
+      >
+      <label for="name">Год рождения</label>
+      <span class="helper-text red-text"
+            *ngIf="form.get('year').touched"
+      >
+        <span *ngIf="form.get('year').errors !== null && form.get('year').errors['required']">Год рождения должен быть заполнен</span>
+      </span>
+    </div>
+  </div>
+</form>

@@ -16,7 +16,8 @@ export class MoviesPageComponent implements OnInit {
 
   constructor(private moviesService: MoviesService,
               private authService: AuthService,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit() {
     this.movies$ = this.moviesService.getAll();

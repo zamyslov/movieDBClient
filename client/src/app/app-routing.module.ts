@@ -16,6 +16,7 @@ import {ActorsInfoComponent} from "./actors-page/actors-info/actors-info.compone
 import {MoviesAddComponent} from "./movies-page/movies-add/movies-add.component";
 import {ActorsListResolve} from "./shared/actors-list.resolve";
 import {CategoriesListResolve} from "./shared/categories-list.resolve";
+import {ActorsAddComponent} from "./actors-page/actors-add/actors-add.component";
 
 const routes: Routes = [
   {
@@ -35,6 +36,7 @@ const routes: Routes = [
         component: MoviesAddComponent,
         resolve: {actors: ActorsListResolve, category: CategoriesListResolve}
       },
+      {path: 'actors/new', component: ActorsAddComponent},
       {path: 'users', component: UsersPageComponent}
     ]
   },

@@ -28,6 +28,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/movie', movieRoutes);
 app.use('/api/admin/movie', movieRoutes);
 app.use('/api/actor', actorRoutes);
+app.use('/api/admin/actor', actorRoutes);
 app.use('/api/admin/category', categoryRoutes);
 
 module.exports = app;

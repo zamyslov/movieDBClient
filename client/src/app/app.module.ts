@@ -21,6 +21,7 @@ import { ActorsInfoComponent } from './actors-page/actors-info/actors-info.compo
 import { MoviesAddComponent } from './movies-page/movies-add/movies-add.component';
 import {ActorsListResolve} from "./shared/actors-list.resolve";
 import {CategoriesListResolve} from "./shared/categories-list.resolve";
+import { ActorsAddComponent } from './actors-page/actors-add/actors-add.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import {CategoriesListResolve} from "./shared/categories-list.resolve";
     LoaderComponent,
     MoviesInfoComponent,
     ActorsInfoComponent,
-    MoviesAddComponent
+    MoviesAddComponent,
+    ActorsAddComponent
   ],
   imports: [
     BrowserModule,

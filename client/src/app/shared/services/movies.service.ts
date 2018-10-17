@@ -19,6 +19,10 @@ export class MoviesService {
     return this.http.get<Movie>(`/api/movie/${id}`)
   }
 
+  delete(id: string): Observable<any> {
+    return this.http.delete<any>(`/api/admin/movie/${id}`)
+  }
+
   create(name: string, year: number, about: string, category: Category, actors: any, image?: File): Observable<Movie> {
     const fd = new FormData();
     if (image) {

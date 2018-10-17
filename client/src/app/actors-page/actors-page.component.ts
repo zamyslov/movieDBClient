@@ -3,6 +3,7 @@ import {Actor} from "../shared/interfaces";
 import {Observable} from "rxjs/internal/Observable";
 import {AuthService} from "../shared/services/auth.service";
 import {ActorsService} from "../shared/services/actors.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-actors-page',
@@ -14,7 +15,8 @@ export class ActorsPageComponent implements OnInit {
   isAdmin: boolean;
 
   constructor(private actorsService: ActorsService,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -22,4 +24,7 @@ export class ActorsPageComponent implements OnInit {
     this.isAdmin = this.authService.isAdmin();
   }
 
+  onAddActor() {
+    this.router.navigate(['/admin/actors/new']);
+  }
 }
