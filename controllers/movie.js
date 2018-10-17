@@ -54,10 +54,12 @@ module.exports.update = async (req, res) => {
     const updated = {
         name: req.body.name,
         year: req.body.year,
-        category: req.body.category.id
+        about: req.body.about,
+        category: req.body.category.id,
+        actors: JSON.parse(req.body.actors)
     };
     if (req.file) {
-        updated.photo = req.file.path
+        updated.poster = req.file.path
     }
     try {
         const movie = await Movie.findOneAndUpdate(

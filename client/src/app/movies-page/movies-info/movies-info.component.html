@@ -12,6 +12,13 @@
       <i class="material-icons left">delete_forever</i>
       Удалить
     </button>
+    <button
+      class="btn btn-small"
+      (click)="updateMovie(movie._id)"
+    >
+      <i class="material-icons left">edit</i>
+      Редактировать
+    </button>
   </div>
   <div class="row">
     <div class="col s12 m7">
@@ -38,7 +45,7 @@
       </div>
     </div>
   </div>
-  <ul class="collection" *ngIf="movie.actors.length > 0; else loader">
+  <ul class="collection" *ngIf="movie.actors.length > 0; else empty">
     <li class="collection-item avatar" *ngFor="let actor of movie.actors">
       <img src="{{actor.photo}}" alt="" class="circle">
       <span class="title">{{actor.surname}} {{actor.name}}</span>
@@ -50,4 +57,7 @@
 </div>
 <ng-template #loader>
   <app-loader></app-loader>
+</ng-template>
+<ng-template #empty>
+  У вас нет фильмов
 </ng-template>

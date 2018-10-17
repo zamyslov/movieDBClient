@@ -49,4 +49,12 @@ export class ActorsInfoComponent implements OnInit {
     );
   }
 
+  updateActor(actor_id: string) {
+    this.router.navigate(['/admin/actors/new'], {
+      queryParams: {
+        id: actor_id
+      }
+    })
+  }
+
 }

@@ -3,7 +3,7 @@
     <h4>
       <a [routerLink]="['/movies']">Фильмы</a>
       <i class="material-icons">keyboard_arrow_right</i>
-      Добавить фильм
+      {{ isNew ? 'Добавить':'Редактировать'}} фильм
     </h4>
     <button
       class="modal-action btn waves-effect"
@@ -31,6 +31,7 @@
             #input>
           <button
             class="waves-effect waves-light btn"
+            type="button"
             (click)="triggerClick()"
           >
             <i class="material-icons left">backup</i>
@@ -128,3 +129,6 @@
     </div>
   </div>
 </form>
+<ng-template #empty>
+  У вас нет фильмов
+</ng-template>

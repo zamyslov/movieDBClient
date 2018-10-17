@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Actor, Category, Movie} from "../interfaces";
+import {Actor} from "../interfaces";
 import {Observable} from "rxjs/internal/Observable";
 
 @Injectable({
@@ -23,14 +23,24 @@ export class ActorsService {
     return this.http.delete<any>(`/api/admin/actor/${id}`)
   }
 
-  create(name: string, surname: string, year: number, image?: File): Observable<Actor> {
+  static receiveFormData(name: string, surname: string, year: number, image?: File): FormData {
     const fd = new FormData();
     if (image) {
       fd.append("image", image, image.name);
     }
     fd.append("name", name);
     fd.append("surname", surname);
-    fd.append("year", ''+year);
+    fd.append("year", '' + year);
+    return fd;
+  }
+
+  create(name: string, surname: string, year: number, image?: File): Observable<Actor> {
+    const fd = ActorsService.receiveFormData(name, surname, year, image);
     return this.http.post<Actor>(`/api/admin/actor`, fd)
+  }
+
+  update(id: string, name: string, surname: string, year: number, image?: File): Observable<Actor> {
+    const fd = ActorsService.receiveFormData(name, surname, year, image);
+    return this.http.patch<Actor>(`/api/admin/actor/${id}`, fd)
   }
 }

@@ -1,11 +1,13 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {MaterialService} from "../../shared/classes/material.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Actor, Category} from "../../shared/interfaces";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Actor, Category, Movie} from "../../shared/interfaces";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {MoviesService} from "../../shared/services/movies.service";
 import {ActorsService} from "../../shared/services/actors.service";
 import {CategoriesService} from "../../shared/services/categories.service";
+import {switchMap} from "rxjs/operators";
+import {of} from "rxjs/internal/observable/of";
 
 declare var M;
 
@@ -26,6 +28,8 @@ export class MoviesAddComponent implements OnInit, AfterViewInit {
   categories: Category[];
   actorsList: Actor[] = [];
   actors: Actor[] = [];
+  movie: Movie;
+  isNew: boolean = true;
 
 
   constructor(private moviesService: MoviesService,
@@ -36,6 +40,46 @@ export class MoviesAddComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.route.queryParams
+      .pipe(
+        switchMap(
+          (params: Params) => {
+            if (params['id']) {
+              this.isNew = false;
+              return this.moviesService.getById(params['id'])
+            }
+            return of(null)
+          }
+        )
+      )
+      .subscribe(
+        (movie: Movie) => {
+          if (movie) {
+            this.movie = movie;
+            movie.actors.forEach((id: string) =>
+              this.actorService.getById(id)
+                .subscribe((actor: Actor) => {
+                  this.actors.push(actor);
+                })
+            );
+            // this.actors = actorsArray;
+            // this.categoryService.getById('' + movie.category)
+            //   .subscribe((actor: Actor) => {
+            //     this.actorsList.push(actor);
+            //   });
+            this.imagePreview = movie.poster;
+            this.form.patchValue({
+              name: movie.name,
+              year: movie.year,
+              about: movie.about,
+              actors: this.actors
+            });
+          }
+          MaterialService.updateTextFields();
+          MaterialService.initializeMultiSelect(this.selectActorsRef);
+        },
+        error => MaterialService.toast(error.error.message)
+      );
     this.form = new FormGroup({
       'name': new FormControl(null, [Validators.required]),
       'year': new FormControl(null,),
@@ -51,6 +95,9 @@ export class MoviesAddComponent implements OnInit, AfterViewInit {
       .subscribe((data: { category: Category[] }) => {
         this.categories = data.category;
       });
+    this.form.controls['year'].setValue(2000);
+    MaterialService.updateTextFields();
+
   }
 
   ngAfterViewInit() {
@@ -90,21 +137,31 @@ export class MoviesAddComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit() {
+    console.log(this.form);
     this.form.disable();
-    console.log(this.actors);
-    this.moviesService.create(
-      this.form.value['name'],
-      this.form.value['year'],
-      this.form.value['about'],
-      this.category,
-      this.actors,
-      this.image
-    ).subscribe(
-      () => this.router.navigate(['/movies'], {
-        queryParams: {
-          added: true
-        }
-      }),
+    let obs$;
+    if (this.isNew) {
+      obs$ = this.moviesService.create(
+        this.form.value['name'],
+        this.form.value['year'],
+        this.form.value['about'],
+        this.category,
+        this.actors,
+        this.image
+      );
+    } else {
+      obs$ = this.moviesService.update(
+        this.movie._id,
+        this.form.value['name'],
+        this.form.value['year'],
+        this.form.value['about'],
+        this.category,
+        this.actors,
+        this.image
+      );
+    }
+    obs$.subscribe(
+      () => this.router.navigate(['/movies'], {}),
       error => {
         MaterialService.toast(error.error.message);
       }

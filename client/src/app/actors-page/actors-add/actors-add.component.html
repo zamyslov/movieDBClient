@@ -3,7 +3,7 @@
     <h4>
       <a [routerLink]="['/actors']">Актеры</a>
       <i class="material-icons">keyboard_arrow_right</i>
-      Добавить актера
+      {{ isNew ? 'Добавить':'Редактировать'}} актера
     </h4>
     <button
       class="modal-action btn waves-effect"
@@ -31,6 +31,7 @@
             #input>
           <button
             class="waves-effect waves-light btn"
+            type="button"
             (click)="triggerClick()"
           >
             <i class="material-icons left">backup</i>

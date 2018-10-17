@@ -49,13 +49,21 @@ export class MoviesInfoComponent implements OnInit {
       );
   }
 
-  deleteMovie(id: string) {
-    this.moviesService.delete(id).subscribe(
+  deleteMovie(movie_id: string) {
+    this.moviesService.delete(movie_id).subscribe(
       () => this.router.navigate(['/movies']),
       error => {
         MaterialService.toast(error.error.message);
       }
     );
+  }
+
+  updateMovie(movie_id: string) {
+    this.router.navigate(['/admin/movies/new'], {
+      queryParams: {
+        id: movie_id
+      }
+    })
   }
 
 }

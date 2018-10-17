@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Actor, Category, Movie} from "../interfaces";
+import {Category, Movie} from "../interfaces";
 import {Observable} from "rxjs/internal/Observable";
 
 @Injectable({
@@ -23,18 +23,27 @@ export class MoviesService {
     return this.http.delete<any>(`/api/admin/movie/${id}`)
   }
 
-  create(name: string, year: number, about: string, category: Category, actors: any, image?: File): Observable<Movie> {
+  static receiveFormData(name: string, year: number, about: string, category: Category, actors: any, image?: File): FormData {
     const fd = new FormData();
     if (image) {
       fd.append("image", image, image.name);
     }
     fd.append("name", name);
-    fd.append("year", ''+year);
+    fd.append("year", '' + year);
     fd.append("about", about);
     fd.append("category", JSON.stringify(category));
     fd.append("actors", JSON.stringify(actors));
-    console.log(actors);
+    return fd;
+  }
+
+  create(name: string, year: number, about: string, category: Category, actors: any, image?: File): Observable<Movie> {
+    const fd = MoviesService.receiveFormData(name, year, about, category, actors, image);
     return this.http.post<Movie>(`/api/admin/movie`, fd)
+  }
+
+  update(id: string, name: string, year: number, about: string, category: Category, actors: any, image?: File): Observable<Movie> {
+    const fd = MoviesService.receiveFormData(name, year, about, category, actors, image);
+    return this.http.patch<Movie>(`/api/admin/movie/${id}`, fd)
   }
 
 }
