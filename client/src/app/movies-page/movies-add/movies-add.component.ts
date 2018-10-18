@@ -40,6 +40,14 @@ export class MoviesAddComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.route.data
+      .subscribe((data: { actors: Actor[] }) => {
+        this.actorsList = data.actors;
+      });
+    this.route.data
+      .subscribe((data: { category: Category[] }) => {
+        this.categories = data.category;
+      });
     this.route.queryParams
       .pipe(
         switchMap(
@@ -56,27 +64,18 @@ export class MoviesAddComponent implements OnInit, AfterViewInit {
         (movie: Movie) => {
           if (movie) {
             this.movie = movie;
-            movie.actors.forEach((id: string) =>
-              this.actorService.getById(id)
-                .subscribe((actor: Actor) => {
-                  this.actors.push(actor);
-                })
-            );
-            // this.actors = actorsArray;
-            // this.categoryService.getById('' + movie.category)
-            //   .subscribe((actor: Actor) => {
-            //     this.actorsList.push(actor);
-            //   });
-            this.imagePreview = movie.poster;
+            console.log(this.movie.actors);
+            this.actors = this.movie.actors.map(id => this.actorsList.find((e) => e._id == id));
+            this.imagePreview = this.movie.poster;
             this.form.patchValue({
-              name: movie.name,
-              year: movie.year,
-              about: movie.about,
-              actors: this.actors
+              name: this.movie.name,
+              year: this.movie.year,
+              about: this.movie.about,
+              actors: this.movie.actors
             });
+            console.log(this.form.value['actors']);
+            MaterialService.initializeMultiSelect(this.selectActorsRef);
           }
-          MaterialService.updateTextFields();
-          MaterialService.initializeMultiSelect(this.selectActorsRef);
         },
         error => MaterialService.toast(error.error.message)
       );
@@ -87,17 +86,8 @@ export class MoviesAddComponent implements OnInit, AfterViewInit {
       'actors': new FormControl(null,),
       'about': new FormControl(null, [Validators.required])
     });
-    this.route.data
-      .subscribe((data: { actors: Actor[] }) => {
-        this.actorsList = data.actors;
-      });
-    this.route.data
-      .subscribe((data: { category: Category[] }) => {
-        this.categories = data.category;
-      });
     this.form.controls['year'].setValue(2000);
     MaterialService.updateTextFields();
-
   }
 
   ngAfterViewInit() {
@@ -134,6 +124,7 @@ export class MoviesAddComponent implements OnInit, AfterViewInit {
       .subscribe((actor: Actor) => {
         this.actors.push(actor);
       }));
+    console.log(this.form.value['actors']);
   }
 
   onSubmit() {

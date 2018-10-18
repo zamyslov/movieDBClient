@@ -51,7 +51,9 @@
       <span class="helper-text red-text"
             *ngIf="form.get('name').touched"
       >
-        <span *ngIf="form.get('name').errors !== null && form.get('name').errors['required']">Название фильма должно быть заполнено</span>
+        <span *ngIf="form.get('name').errors !== null && form.get('name').errors['required']">
+          Название фильма должно быть заполнено
+        </span>
       </span>
     </div>
   </div>
@@ -95,7 +97,9 @@
             <span class="helper-text red-text"
                   *ngIf="form.get('about').touched"
             >
-            <span *ngIf="form.get('about').errors !== null && form.get('about').errors['required']">Сюжет фильма должен быть заполнен</span>
+            <span *ngIf="form.get('about').errors !== null && form.get('about').errors['required']">
+              Сюжет фильма должен быть заполнен
+            </span>
             </span>
           </div>
         </div>
@@ -120,7 +124,7 @@
                 data-icon=""
                 class="left"
               >
-                {{actor.surname}} {{actor.name}}
+                {{actor.surname}}, {{actor.name}}
               </option>
             </select>
           </div>
