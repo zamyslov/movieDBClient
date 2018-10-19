@@ -73,8 +73,8 @@ export class MoviesAddComponent implements OnInit, AfterViewInit {
               about: this.movie.about,
               actors: this.movie.actors
             });
-            console.log(this.form.value['actors']);
             MaterialService.initializeMultiSelect(this.selectActorsRef);
+            MaterialService.updateTextFields();
           }
         },
         error => MaterialService.toast(error.error.message)

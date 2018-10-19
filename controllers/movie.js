@@ -22,6 +22,15 @@ module.exports.getById = async (req, res) => {
     }
 };
 
+module.exports.getByActorId = async (req, res) => {
+    try {
+        const movie = await Movie.find({actors: req.params.id});
+        res.status(200).json(movie);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
 module.exports.delete = async (req, res) => {
     try {
         await Movie.remove({_id: req.params.id});

@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {Actor, Movie} from "../../shared/interfaces";
 import {of} from "rxjs/internal/observable/of";
 import {MaterialService} from "../../shared/classes/material.service";
 import {switchMap} from "rxjs/operators";
 import {ActorsService} from "../../shared/services/actors.service";
+import {MoviesService} from "../../shared/services/movies.service";
 
 @Component({
   selector: 'app-actors-info',
@@ -13,10 +14,13 @@ import {ActorsService} from "../../shared/services/actors.service";
 })
 export class ActorsInfoComponent implements OnInit {
   actor: Actor;
+  actorsMoviesArray: Movie[] = [];
 
-  constructor( private actorService: ActorsService,
-               private route: ActivatedRoute,
-               private router: Router) { }
+  constructor(private actorService: ActorsService,
+              private movieService: MoviesService,
+              private route: ActivatedRoute,
+              private router: Router) {
+  }
 
   ngOnInit() {
     this.route.params
@@ -34,6 +38,11 @@ export class ActorsInfoComponent implements OnInit {
         (actor: Actor) => {
           if (actor) {
             this.actor = actor;
+            this.movieService.getByActorId(this.actor._id)
+              .subscribe((movies: Movie[]) => {
+                this.actorsMoviesArray = movies;
+                console.log(this.actorsMoviesArray);
+              })
           }
         },
         error => MaterialService.toast(error.error.message)

@@ -3,7 +3,7 @@
     <h4>
       <a [routerLink]="['/actors']">Актер</a>
       <i class="material-icons">keyboard_arrow_right</i>
-      {{actor.name}} {{actor.surname}}
+      {{actor.surname}}, {{actor.name}}
     </h4>
     <button
       class="btn btn-small red"
@@ -28,14 +28,27 @@
         </div>
         <div class="card-stacked">
           <div class="card-content">
-            <p>{{actor.name}}</p>
             <p>{{actor.surname}}</p>
+            <p>{{actor.name}}</p>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <ul class="collection" *ngIf="actorsMoviesArray.length > 0; else empty">
+    <li class="collection-item avatar" *ngFor="let movie of actorsMoviesArray">
+      <img src="{{movie.poster}}" alt="" class="circle">
+      <span class="title">{{movie.name}}</span>
+      <p>{{movie.year}} <br>
+      </p>
+      <a [routerLink]="['/movies', movie._id]" class="secondary-content"><i class="material-icons">send</i></a>
+    </li>
+  </ul>
+
 </div>
 <ng-template #loader>
   <app-loader></app-loader>
+</ng-template>
+<ng-template #empty>
+  У этого актера нет фильмов
 </ng-template>

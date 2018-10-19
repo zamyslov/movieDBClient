@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Actor} from "../interfaces";
 import {Observable} from "rxjs/internal/Observable";
+import {MoviesService} from "./movies.service";
 
 @Injectable({
   providedIn: 'root'

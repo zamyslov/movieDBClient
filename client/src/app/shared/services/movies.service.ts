@@ -8,7 +8,7 @@ import {Observable} from "rxjs/internal/Observable";
 })
 export class MoviesService {
 
-  constructor(private http: |HttpClient) {
+  constructor(private http: HttpClient) {
   }
 
   getAll(): Observable<Movie[]> {
@@ -17,6 +17,10 @@ export class MoviesService {
 
   getById(id: string): Observable<Movie> {
     return this.http.get<Movie>(`/api/movie/${id}`)
+  }
+
+  getByActorId(id: string): Observable<Movie[]> {
+    return this.http.get<Movie[]>(`/api/movie/actor/${id}`)
   }
 
   delete(id: string): Observable<any> {
