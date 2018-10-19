@@ -50,7 +50,7 @@ module.exports.create = async (req, res) => {
             year: req.body.year,
             about: req.body.about,
             poster: req.file ? req.file.path : '',
-            category: req.body.category.id,
+            category: JSON.parse(req.body.category),
             actors: JSON.parse(req.body.actors)
         }).save();
         res.status(201).json(movie);
@@ -64,7 +64,7 @@ module.exports.update = async (req, res) => {
         name: req.body.name,
         year: req.body.year,
         about: req.body.about,
-        category: req.body.category.id,
+        category: JSON.parse(req.body.category),
         actors: JSON.parse(req.body.actors)
     };
     if (req.file) {

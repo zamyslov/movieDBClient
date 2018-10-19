@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {Actor, Movie} from "../../shared/interfaces";
+import {Actor, Category, Movie} from "../../shared/interfaces";
 import {switchMap} from "rxjs/operators";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {MoviesService} from "../../shared/services/movies.service";
 import {of} from "rxjs/internal/observable/of";
 import {MaterialService} from "../../shared/classes/material.service";
 import {ActorsService} from "../../shared/services/actors.service";
+import {CategoriesService} from "../../shared/services/categories.service";
 
 @Component({
   selector: 'app-movies-info',
@@ -15,9 +16,11 @@ import {ActorsService} from "../../shared/services/actors.service";
 export class MoviesInfoComponent implements OnInit {
   movie: Movie;
   actors: Actor[] = [];
+  category: Category = {name: ''};
 
   constructor(private moviesService: MoviesService,
-              private actorService: ActorsService,
+              private actorsService: ActorsService,
+              private categoriesService: CategoriesService,
               private route: ActivatedRoute,
               private router: Router) {
   }
@@ -38,8 +41,11 @@ export class MoviesInfoComponent implements OnInit {
           if (movie) {
             this.movie = movie;
             const array = this.movie.actors;
+            console.log(this.movie.category);
+            this.categoriesService.getById(''+this.movie.category)
+              .subscribe((category: Category) => this.category = category);
             this.movie.actors = [];
-            array.forEach((id: string) => this.actorService.getById(id)
+            array.forEach((id: string) => this.actorsService.getById(id)
               .subscribe((actor: Actor) => {
                 this.movie.actors.push(actor);
               }));

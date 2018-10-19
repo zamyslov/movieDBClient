@@ -33,8 +33,8 @@ export class MoviesAddComponent implements OnInit, AfterViewInit {
 
 
   constructor(private moviesService: MoviesService,
-              private actorService: ActorsService,
-              private categoryService: CategoriesService,
+              private actorsService: ActorsService,
+              private categoriesService: CategoriesService,
               private route: ActivatedRoute,
               private router: Router) {
   }
@@ -64,16 +64,18 @@ export class MoviesAddComponent implements OnInit, AfterViewInit {
         (movie: Movie) => {
           if (movie) {
             this.movie = movie;
-            console.log(this.movie.actors);
             this.actors = this.movie.actors.map(id => this.actorsList.find((e) => e._id == id));
+            this.category = this.categories.find((e) => e._id == ''+this.movie.category);
             this.imagePreview = this.movie.poster;
             this.form.patchValue({
               name: this.movie.name,
               year: this.movie.year,
               about: this.movie.about,
+              category: this.category._id,
               actors: this.movie.actors
             });
             MaterialService.initializeMultiSelect(this.selectActorsRef);
+            MaterialService.initializeMultiSelect(this.selectCategoriesRef);
             MaterialService.updateTextFields();
           }
         },
@@ -111,7 +113,7 @@ export class MoviesAddComponent implements OnInit, AfterViewInit {
   }
 
   onCategoryChange() {
-    this.categoryService.getById('' + this.form.value['category']).subscribe(
+    this.categoriesService.getById('' + this.form.value['category']).subscribe(
       (value) => {
         this.category = value;
       }
@@ -120,11 +122,10 @@ export class MoviesAddComponent implements OnInit, AfterViewInit {
 
   onActorsChange() {
     this.actors = [];
-    this.form.value['actors'].forEach((id) => this.actorService.getById(id)
+    this.form.value['actors'].forEach((id) => this.actorsService.getById(id)
       .subscribe((actor: Actor) => {
         this.actors.push(actor);
       }));
-    console.log(this.form.value['actors']);
   }
 
   onSubmit() {

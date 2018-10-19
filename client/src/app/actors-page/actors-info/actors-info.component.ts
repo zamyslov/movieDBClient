@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from "@angular/router";
-import {Actor, Movie} from "../../shared/interfaces";
-import {of} from "rxjs/internal/observable/of";
 import {MaterialService} from "../../shared/classes/material.service";
+import {of} from "rxjs/internal/observable/of";
 import {switchMap} from "rxjs/operators";
+import {Actor, Movie} from "../../shared/interfaces";
 import {ActorsService} from "../../shared/services/actors.service";
 import {MoviesService} from "../../shared/services/movies.service";
 
@@ -41,7 +41,6 @@ export class ActorsInfoComponent implements OnInit {
             this.movieService.getByActorId(this.actor._id)
               .subscribe((movies: Movie[]) => {
                 this.actorsMoviesArray = movies;
-                console.log(this.actorsMoviesArray);
               })
           }
         },
