@@ -2,6 +2,7 @@ export interface User {
   login: string,
   password: string
   name?: string
+  _id?: string
 }
 export interface Actor {
   name: string,

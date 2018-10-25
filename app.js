@@ -6,6 +6,7 @@ const authRoutes = require('./routes/auth');
 const movieRoutes = require('./routes/movie');
 const actorRoutes = require('./routes/actor');
 const categoryRoutes = require('./routes/category');
+const userRoutes = require('./routes/user');
 const keys = require('./config/keys');
 
 const app = express();
@@ -30,5 +31,6 @@ app.use('/api/admin/movie', movieRoutes);
 app.use('/api/actor', actorRoutes);
 app.use('/api/admin/actor', actorRoutes);
 app.use('/api/admin/category', categoryRoutes);
+app.use('/api/admin/user', userRoutes);
 
 module.exports = app;
