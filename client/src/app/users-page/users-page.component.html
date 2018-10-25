@@ -7,21 +7,29 @@
   </button>
 </div>
 
-<table *ngIf="users$ | async as users; else loader">
+<table class="striped" *ngIf="users$ | async as users; else loader">
   <thead>
   <tr>
     <th>Имя</th>
     <th>Логин</th>
-    <th>Пароль</th>
     <th>Админ</th>
+    <th></th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let user of users">
     <td>{{user.name}}</td>
     <td>{{user.login}}</td>
-    <td>{{user.password}}</td>
-    <td>{{user.isAdmin}}</td>
+    <td class="material-icons">{{user.isAdmin ? 'done':''}}</td>
+    <td>
+      <button
+        class="btn btn-small red"
+        (click)="deleteUser(user._id)"
+      >
+        <i class="material-icons left">delete_forever</i>
+        Удалить
+      </button>
+    </td>
   </tr>
   </tbody>
 </table>
