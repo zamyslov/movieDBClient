@@ -27,8 +27,8 @@ export class UsersService {
     return this.http.patch<User>(`/api/admin/user/${user._id}`, user)
   }
 
-  delete(user: User): Observable<User> {
-    return this.http.delete<User>(`/api/admin/user/${user._id}`)
+  delete(id: string): Observable<User> {
+    return this.http.delete<User>(`/api/admin/user/${id}`)
   }
 
 }
