@@ -23,8 +23,15 @@
     <td class="material-icons">{{user.isAdmin ? 'done':''}}</td>
     <td>
       <button
+        class="btn btn-small blue"
+        (click)="onUpdateUser(user._id)"
+      >
+        <i class="material-icons left">edit</i>
+        Редактировать
+      </button>
+      <button
         class="btn btn-small red"
-        (click)="deleteUser(user)"
+        (click)="onDeleteUser(user)"
       >
         <i class="material-icons left">delete_forever</i>
         Удалить

@@ -22,7 +22,6 @@ import { MoviesAddComponent } from './movies-page/movies-add/movies-add.componen
 import {ActorsListResolve} from "./shared/actors-list.resolve";
 import {CategoriesListResolve} from "./shared/categories-list.resolve";
 import { ActorsAddComponent } from './actors-page/actors-add/actors-add.component';
-import { ActorAddComponent } from './actors-page/actor-add/actor-add.component';
 import { UsersAddComponent } from './users-page/users-add/users-add.component';
 
 @NgModule({
@@ -42,7 +41,6 @@ import { UsersAddComponent } from './users-page/users-add/users-add.component';
     ActorsInfoComponent,
     MoviesAddComponent,
     ActorsAddComponent,
-    ActorAddComponent,
     UsersAddComponent
   ],
   imports: [

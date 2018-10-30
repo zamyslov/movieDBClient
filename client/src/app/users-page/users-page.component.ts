@@ -21,7 +21,7 @@ export class UsersPageComponent implements OnInit {
     this.users$ = this.userService.getAll();
   }
 
-  deleteUser(user: User) {
+  onDeleteUser(user: User) {
     console.log(user.name);
     console.log(user.name === 'User');
     if (user.login === 'User' || user.login === 'Admin') {
@@ -32,10 +32,20 @@ export class UsersPageComponent implements OnInit {
         error => {
           MaterialService.toast(error.error.message);
         }
-      )
-      ;
+      );
     }
   }
 
+  onUpdateUser(user_id: string) {
+    this.router.navigate(['/admin/users/new'], {
+      queryParams: {
+        id: user_id
+      }
+    })
+  }
+
+  onAddUser() {
+    this.router.navigate(['/admin/users/new']);
+  }
 
 }

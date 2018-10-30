@@ -1,3 +1,65 @@
-<p>
-  users-add works!
-</p>
+<form class="card" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="page-title">
+    <h4>
+      <a [routerLink]="['/admin/users']">Пользователи</a>
+      <i class="material-icons">keyboard_arrow_right</i>
+      {{ isNew ? 'Добавить':'Редактировать'}} пользователя
+    </h4>
+    <button
+      class="modal-action btn waves-effect"
+      type="submit"
+      [disabled]="form.invalid || form.disabled"
+    >Сохранить пользователя
+    </button>
+  </div>
+  <br>
+  <div class="row">
+    <div class="input-field">
+      <input
+        id="login"
+        type="text"
+        formControlName="login"
+        [ngClass]="{invalid:form.get('login').invalid && form.get('login').touched}"
+      >
+      <label for="login">Login:</label>
+      <span class="helper-text red-text"
+            *ngIf="form.get('login').invalid && form.get('login').touched"
+      >
+        <span *ngIf="form.get('login').errors['required']">Логин должен быть заполнен</span>
+      </span>
+    </div>
+    <div class="input-field">
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+        [ngClass]="{invalid:form.get('password').invalid && form.get('password').touched}"
+      >
+      <label for="password">Пароль:</label>
+      <span class="helper-text red-text"
+            *ngIf="form.get('password').invalid && form.touched"
+      >
+        <span *ngIf="form.get('password').errors['required']">Пароль должен быть заполнен</span>
+        <span
+          *ngIf="form.get('password')['errors']['minlength'] && form.get('password')['errors']['minlength']['requiredLength']">
+        Пароль должен быть больше {{ form.get('password')['errors']['minlength']['requiredLength'] }} знаков!
+        Сейчас введено {{ form.get('password')['errors']['minlength']['actualLength'] }}
+      </span>
+      </span>
+    </div>
+    <div class="input-field">
+      <input
+        id="name"
+        type="text"
+        formControlName="name"
+        [ngClass]="{invalid:form.get('name').invalid && form.get('name').touched}"
+      >
+      <label for="name">Name:</label>
+      <span class="helper-text red-text"
+            *ngIf="form.get('name').invalid && form.get('name').touched"
+      >
+        <span *ngIf="form.get('name').errors['required']">Имя должно быть заполнено</span>
+      </span>
+    </div>
+  </div>
+</form>
