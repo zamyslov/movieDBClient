@@ -1,11 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute, Params} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {of} from "rxjs/internal/observable/of";
 import {switchMap} from "rxjs/operators";
 import {UsersService} from "../../shared/services/users.service";
 import {User} from "../../shared/interfaces";
 import {MaterialService} from "../../shared/classes/material.service";
+
+declare var M;
 
 @Component({
   selector: 'app-users-add',
@@ -16,20 +18,20 @@ export class UsersAddComponent implements OnInit {
   form: FormGroup;
   user: User;
   isNew: boolean = true;
+  changePassword: boolean = false;
 
   constructor(private userService: UsersService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit() {
-    this.route.params
+    this.route.queryParams
       .pipe(
         switchMap(
           (params: Params) => {
-            console.log(params);
             if (params['id']) {
               this.isNew = false;
-              console.log(this.isNew);
               return this.userService.getById(params['id'])
             }
             return of(null)
@@ -39,21 +41,57 @@ export class UsersAddComponent implements OnInit {
       .subscribe(
         (user: User) => {
           if (user) {
-            console.log(this.user);
             this.user = user;
             this.form.patchValue({
               name: this.user.name,
               login: this.user.login,
+              password: this.user.password,
+              newPassword: this.user.password
             });
+            MaterialService.updateTextFields();
           }
         },
         error => MaterialService.toast(error.error.message)
       );
     this.form = new FormGroup({
       'login': new FormControl(null, [Validators.required]),
-      'password': new FormControl(null, [Validators.required, Validators.minLength(3)]),
+      'password': new FormControl(null),
+      'newPassword': new FormControl(null, [Validators.required, Validators.minLength(3)]),
       'name': new FormControl(null, [Validators.required])
     });
+  }
+
+  onUpdateUserPassword() {
+    this.changePassword = true;
+    this.form.patchValue({
+      newPassword: ''
+    });
+  }
+
+  onSubmit() {
+    let obs$;
+    this.form.disable();
+    if (this.isNew) {
+      const user: User = {
+        name: this.form.value['name'],
+        login: this.form.value['login'],
+        password: this.form.value['password']
+      };
+      obs$ = this.userService.create(user)
+    } else {
+      this.user.name = this.form.value['name'];
+      this.user.login = this.form.value['login'];
+      this.user.name = this.form.value['name'];
+      obs$ = this.userService.update(this.user);
+    }
+
+    obs$.subscribe(
+      () => this.router.navigate(['/admin/users']),
+      error => {
+        MaterialService.toast(error.error.message);
+      }
+    );
+    this.form.enable();
   }
 
 }

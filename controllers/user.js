@@ -47,10 +47,18 @@ module.exports.create = async (req, res) => {
 };
 
 module.exports.update = async (req, res) => {
-    const salt = bcrypt.genSaltSync(10);
+    const candidate = await User.findOne({login: req.body.login});
+    let newPassword = req.body.password;
+    if (candidate) {
+        const passwordResult = bcrypt.compareSync(newPassword, candidate.password);
+        if (!passwordResult) {
+            const salt = bcrypt.genSaltSync(10);
+            newPassword = bcrypt.hashSync(newPassword, salt);
+        }
+    }
     const updated = {
         login: req.body.login,
-        password: bcrypt.hashSync(req.body.password, salt),
+        password: newPassword,
         name: req.body.name,
         isAdmin: req.body.isAdmin,
     };
