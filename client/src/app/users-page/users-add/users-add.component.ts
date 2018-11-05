@@ -46,7 +46,6 @@ export class UsersAddComponent implements OnInit {
               name: this.user.name,
               login: this.user.login,
               password: this.user.password,
-              newPassword: this.user.password
             });
             MaterialService.updateTextFields();
           }
@@ -55,8 +54,8 @@ export class UsersAddComponent implements OnInit {
       );
     this.form = new FormGroup({
       'login': new FormControl(null, [Validators.required]),
-      'password': new FormControl(null),
-      'newPassword': new FormControl(null, [Validators.required, Validators.minLength(3)]),
+      'password': new FormControl(null, !this.isNew ? [] : [Validators.required, Validators.minLength(3)]),
+      'newPassword': new FormControl(null, this.isNew ? [] : [Validators.required, Validators.minLength(3)]),
       'name': new FormControl(null, [Validators.required])
     });
   }
@@ -70,18 +69,23 @@ export class UsersAddComponent implements OnInit {
 
   onSubmit() {
     let obs$;
+    console.log(this.form);
     this.form.disable();
     if (this.isNew) {
       const user: User = {
         name: this.form.value['name'],
         login: this.form.value['login'],
-        password: this.form.value['password']
+        password: this.form.value['password'],
+        isAdmin: false
       };
       obs$ = this.userService.create(user)
     } else {
       this.user.name = this.form.value['name'];
       this.user.login = this.form.value['login'];
       this.user.name = this.form.value['name'];
+      if (this.changePassword) {
+        this.user.password = this.form.value['newPassword'];
+      }
       obs$ = this.userService.update(this.user);
     }
 

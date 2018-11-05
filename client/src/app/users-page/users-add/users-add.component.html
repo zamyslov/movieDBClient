@@ -8,7 +8,6 @@
     <button
       class="modal-action btn waves-effect"
       type="submit"
-      [disabled]="form.invalid || form.disabled"
     >Сохранить пользователя
     </button>
   </div>
@@ -49,6 +48,16 @@
         formControlName="password"
       >
       <label for="password">Пароль:</label>
+      <span class="helper-text red-text"
+            *ngIf="form.get('password').invalid && form.touched"
+      >
+        <span *ngIf="form.get('password').errors['required']">Пароль должен быть заполнен</span>
+        <span
+          *ngIf="form.get('password')['errors']['minlength'] && form.get('password')['errors']['minlength']['requiredLength']">
+        Пароль должен быть больше {{ form.get('newPassword')['errors']['minlength']['requiredLength'] }} знаков!
+        Сейчас введено {{ form.get('newPassword')['errors']['minlength']['actualLength'] }}
+      </span>
+      </span>
     </div>
     <div *ngIf="!isNew">
     <button
@@ -67,7 +76,7 @@
         formControlName="newPassword"
         [ngClass]="{invalid:form.get('newPassword').invalid && form.get('newPassword').touched}"
       >
-      <label for="name">New password:</label>
+      <label for="newPassword">New password:</label>
       <span class="helper-text red-text"
             *ngIf="form.get('newPassword').invalid && form.touched"
       >
