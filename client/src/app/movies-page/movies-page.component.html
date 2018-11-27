@@ -8,9 +8,14 @@
 </div>
 <div
   class="frow order-row"
-  *ngIf="movies$ | async as movies; else loader"
+  *ngIf="movies; else loader"
 >
-  <div *ngIf="movies.empty !== 0; else empty">
+  <div *ngIf="movies.length !== 0; else empty">
+    <ul class="pagination">
+      <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+      <li class="active" *ngFor="let page of pages; let i = index" >{{i+1}}</li>
+      <li class="waves-effect" (click)="nextPage()"><i class="material-icons">chevron_right</i></li>
+    </ul>
     <div
       class="card waves-effect pointer"
       *ngFor="let movie of movies"

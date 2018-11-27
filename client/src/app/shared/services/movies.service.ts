@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Category, Movie} from "../interfaces";
 import {Observable} from "rxjs/internal/Observable";
 
@@ -11,8 +11,11 @@ export class MoviesService {
   constructor(private http: HttpClient) {
   }
 
-  getAll(): Observable<Movie[]> {
-    return this.http.get<Movie[]>('/api/movie')
+  getAll(params: any = {}): Observable<any> {
+    return this.http.get<Movie[]>('/api/movie',
+      {
+        params: new HttpParams({fromObject: params})
+      })
   }
 
   getById(id: string): Observable<Movie> {

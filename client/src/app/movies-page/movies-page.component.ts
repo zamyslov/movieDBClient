@@ -5,6 +5,8 @@ import {Movie} from "../shared/interfaces";
 import {AuthService} from "../shared/services/auth.service";
 import {Router} from "@angular/router";
 
+const STEP = 2;
+
 @Component({
   selector: 'app-movies-page',
   templateUrl: './movies-page.component.html',
@@ -13,6 +15,10 @@ import {Router} from "@angular/router";
 export class MoviesPageComponent implements OnInit {
   movies$: Observable<Movie[]>;
   isAdmin: boolean;
+  offset = 0;
+  limit = STEP;
+  movies: Movie[];
+  pages = [];
 
   constructor(private moviesService: MoviesService,
               private authService: AuthService,
@@ -20,8 +26,26 @@ export class MoviesPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.movies$ = this.moviesService.getAll();
+    this.getAll();
+
     this.isAdmin = this.authService.isAdmin();
+  }
+
+  getAll() {
+    const params = {
+      offset: this.offset,
+      limit: this.limit
+    };
+    this.moviesService.getAll(params).subscribe(res => {
+        this.movies = res.movie;
+        this.pages = new Array(Math.ceil(res.count/STEP));
+      }
+    );
+  }
+
+  nextPage() {
+    this.offset += this.limit;
+    this.getAll();
   }
 
   onAddMovie() {

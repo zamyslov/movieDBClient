@@ -6,8 +6,11 @@ module.exports.getAll = async (req, res) => {
         const movie = await Movie.find()
             .sort({name: +1})
             .skip(+req.query.offset)
-            .limit(req.query.limit);
-        res.status(200).json(movie);
+            .limit(+req.query.limit);
+        const count = await Movie.count();
+        res.status(200).json(
+            {movie, count}
+        );
     } catch (e) {
         errorHandler(res, e);
     }
