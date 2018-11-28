@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {MoviesService} from "../shared/services/movies.service";
-import {Observable} from "rxjs/internal/Observable";
 import {Movie} from "../shared/interfaces";
 import {AuthService} from "../shared/services/auth.service";
 import {Router} from "@angular/router";
 
-const STEP = 2;
+const STEP = 1;
 
 @Component({
   selector: 'app-movies-page',
@@ -13,12 +12,11 @@ const STEP = 2;
   styleUrls: ['./movies-page.component.css']
 })
 export class MoviesPageComponent implements OnInit {
-  movies$: Observable<Movie[]>;
   isAdmin: boolean;
-  offset = 0;
   limit = STEP;
   movies: Movie[];
   pages = [];
+  currentPage = 1;
 
   constructor(private moviesService: MoviesService,
               private authService: AuthService,
@@ -27,24 +25,38 @@ export class MoviesPageComponent implements OnInit {
 
   ngOnInit() {
     this.getAll();
-
+    this.currentPage = 1;
     this.isAdmin = this.authService.isAdmin();
   }
 
   getAll() {
     const params = {
-      offset: this.offset,
+      offset: (this.currentPage - 1) * STEP,
       limit: this.limit
     };
     this.moviesService.getAll(params).subscribe(res => {
         this.movies = res.movie;
-        this.pages = new Array(Math.ceil(res.count/STEP));
+        this.pages = new Array(Math.ceil(res.count / STEP));
       }
     );
   }
 
   nextPage() {
-    this.offset += this.limit;
+    if (this.currentPage < this.pages.length) {
+      this.currentPage += 1;
+      this.getAll();
+    }
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage -= 1;
+      this.getAll();
+    }
+  }
+
+  Page(index: number) {
+    this.currentPage = index;
     this.getAll();
   }
 

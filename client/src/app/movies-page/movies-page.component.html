@@ -12,14 +12,25 @@
 >
   <div *ngIf="movies.length !== 0; else empty">
     <ul class="pagination">
-      <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-      <li class="active" *ngFor="let page of pages; let i = index" >{{i+1}}</li>
-      <li class="waves-effect" (click)="nextPage()"><i class="material-icons">chevron_right</i></li>
+      <li [ngClass]="{disabled: currentPage == 1}"
+          class="waves-effect"
+          (click)="previousPage()"
+      ><a><i class="material-icons">chevron_left</i></a></li>
+      <li *ngFor="let page of pages; let i = index"
+          class="waves-effect"
+          [ngClass]="{active: currentPage == i+1}"
+          (click)="Page(i+1)"
+     ><a>{{i+1}}</a></li>
+      <li [ngClass]="{disabled: currentPage == pages.length}"
+          class="waves-effect"
+          (click)="nextPage()"
+      ><a><i
+        class="material-icons">chevron_right</i></a></li>
     </ul>
     <div
       class="card waves-effect pointer"
       *ngFor="let movie of movies"
-      [routerLink] = "['/movies', movie._id]"
+      [routerLink]="['/movies', movie._id]"
     >
       <div class="center">
         <img src="{{movie.poster}}" class="responsive-img order-img">
