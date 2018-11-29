@@ -13,10 +13,11 @@ const STEP = 1;
 })
 export class MoviesPageComponent implements OnInit {
   isAdmin: boolean;
-  limit = STEP;
   movies: Movie[];
   pages = [];
   currentPage = 1;
+  limit = STEP;
+  limits = [1, 2, 5, 10];
 
   constructor(private moviesService: MoviesService,
               private authService: AuthService,
@@ -63,5 +64,4 @@ export class MoviesPageComponent implements OnInit {
   onAddMovie() {
     this.router.navigate(['/admin/movies/new']);
   }
-
 }

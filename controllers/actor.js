@@ -7,8 +7,9 @@ module.exports.getAll = async (req, res) => {
         const actor = await Actor.find()
             .sort({surname: +1})
             .skip(+req.query.offset)
-            .limit(req.query.limit);
-        res.status(200).json(actor);
+            .limit(+req.query.limit);
+        const count = await Actor.count();
+        res.status(200).json({actor, count});
     } catch (e) {
         errorHandler(res, e);
     }

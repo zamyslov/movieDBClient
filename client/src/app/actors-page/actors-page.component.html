@@ -8,9 +8,25 @@
 </div>
 <div
   class="frow order-row"
-  *ngIf="actors$ | async as actors; else loader"
+  *ngIf="actors; else loader"
 >
-  <div *ngIf="actors.empty !== 0; else empty">
+  <div *ngIf="actors.length !== 0; else empty">
+    <ul class="pagination">
+      <li [ngClass]="{disabled: currentPage == 1}"
+          class="waves-effect"
+          (click)="previousPage()"
+      ><a><i class="material-icons">chevron_left</i></a></li>
+      <li *ngFor="let page of pages; let i = index"
+          class="waves-effect"
+          [ngClass]="{active: currentPage == i+1}"
+          (click)="Page(i+1)"
+      ><a>{{i+1}}</a></li>
+      <li [ngClass]="{disabled: currentPage == pages.length}"
+          class="waves-effect"
+          (click)="nextPage()"
+      ><a><i
+        class="material-icons">chevron_right</i></a></li>
+    </ul>
     <div
       class="card waves-effect pointer"
       *ngFor="let actor of actors"
