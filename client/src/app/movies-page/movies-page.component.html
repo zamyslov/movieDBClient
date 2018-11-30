@@ -37,11 +37,11 @@
       </div>
       <div class="card-content center p10">
         <h5 class="m0">{{movie.name}}</h5>
+        <bar-rating [(rate)]="rate" [max]="5" [readOnly]="true"></bar-rating>
       </div>
     </div>
   </div>
 </div>
-<!--<app-rating [rating]='item.rating' [itemId]='item.id'></app-rating>-->
 
 <ng-template #loader>
   <app-loader></app-loader>

@@ -23,7 +23,7 @@ import {ActorsListResolve} from "./shared/actors-list.resolve";
 import {CategoriesListResolve} from "./shared/categories-list.resolve";
 import { ActorsAddComponent } from './actors-page/actors-add/actors-add.component';
 import { UsersAddComponent } from './users-page/users-add/users-add.component';
-import {RatingComponent} from "./shared/components/rating/rating.component";
+import {BarRatingModule} from "ngx-bar-rating";
 
 @NgModule({
   declarations: [
@@ -42,15 +42,15 @@ import {RatingComponent} from "./shared/components/rating/rating.component";
     ActorsInfoComponent,
     MoviesAddComponent,
     ActorsAddComponent,
-    UsersAddComponent,
-    RatingComponent
+    UsersAddComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BarRatingModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

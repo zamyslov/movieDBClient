@@ -19,6 +19,7 @@ export class MoviesPageComponent implements OnInit {
   limit = STEP;
   limits = [1, 2, 5, 10];
   item: { 'id': 0, 'rating': 3, 'contact': 'Dennis Phillips', 'company': 'PROFLEX' };
+  rate = 3.5;
 
   constructor(private moviesService: MoviesService,
               private authService: AuthService,
