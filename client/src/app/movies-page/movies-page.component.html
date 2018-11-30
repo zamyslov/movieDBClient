@@ -1,46 +1,47 @@
-  <div class="page-title">
-    <h4>Фильмы</h4>
-    <button *ngIf="isAdmin"
-            class="waves-effect waves-light btn grey darken-1"
-            (click)="onAddMovie()"
-    >Добавить фильм
-    </button>
-  </div>
-  <div
-    class="frow order-row"
-    *ngIf="movies; else loader"
-  >
-    <div *ngIf="movies.length !== 0; else empty">
-      <ul class="pagination">
-        <li [ngClass]="{disabled: currentPage == 1}"
-            class="waves-effect"
-            (click)="previousPage()"
-        ><a><i class="material-icons">chevron_left</i></a></li>
-        <li *ngFor="let page of pages; let i = index"
-            class="waves-effect"
-            [ngClass]="{active: currentPage == i+1}"
-            (click)="Page(i+1)"
-        ><a>{{i+1}}</a></li>
-        <li [ngClass]="{disabled: currentPage == pages.length}"
-            class="waves-effect"
-            (click)="nextPage()"
-        ><a><i
-          class="material-icons">chevron_right</i></a></li>
-      </ul>
-      <div
-        class="card waves-effect pointer"
-        *ngFor="let movie of movies"
-        [routerLink]="['/movies', movie._id]"
-      >
-        <div class="center">
-          <img src="{{movie.poster}}" class="responsive-img order-img">
-        </div>
-        <div class="card-content center p10">
-          <h5 class="m0">{{movie.name}}</h5>
-        </div>
+<div class="page-title">
+  <h4>Фильмы</h4>
+  <button *ngIf="isAdmin"
+          class="waves-effect waves-light btn grey darken-1"
+          (click)="onAddMovie()"
+  >Добавить фильм
+  </button>
+</div>
+<div
+  class="frow order-row"
+  *ngIf="movies; else loader"
+>
+  <div *ngIf="movies.length !== 0; else empty">
+    <ul class="pagination">
+      <li [ngClass]="{disabled: currentPage == 1}"
+          class="waves-effect"
+          (click)="previousPage()"
+      ><a><i class="material-icons">chevron_left</i></a></li>
+      <li *ngFor="let page of pages; let i = index"
+          class="waves-effect"
+          [ngClass]="{active: currentPage == i+1}"
+          (click)="Page(i+1)"
+      ><a>{{i+1}}</a></li>
+      <li [ngClass]="{disabled: currentPage == pages.length}"
+          class="waves-effect"
+          (click)="nextPage()"
+      ><a><i
+        class="material-icons">chevron_right</i></a></li>
+    </ul>
+    <div
+      class="card waves-effect pointer"
+      *ngFor="let movie of movies"
+      [routerLink]="['/movies', movie._id]"
+    >
+      <div class="center">
+        <img src="{{movie.poster}}" class="responsive-img order-img">
+      </div>
+      <div class="card-content center p10">
+        <h5 class="m0">{{movie.name}}</h5>
       </div>
     </div>
   </div>
+</div>
+<!--<app-rating [rating]='item.rating' [itemId]='item.id'></app-rating>-->
 
 <ng-template #loader>
   <app-loader></app-loader>

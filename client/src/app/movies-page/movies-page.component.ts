@@ -18,6 +18,7 @@ export class MoviesPageComponent implements OnInit {
   currentPage = 1;
   limit = STEP;
   limits = [1, 2, 5, 10];
+  item: { 'id': 0, 'rating': 3, 'contact': 'Dennis Phillips', 'company': 'PROFLEX' };
 
   constructor(private moviesService: MoviesService,
               private authService: AuthService,
@@ -63,5 +64,15 @@ export class MoviesPageComponent implements OnInit {
 
   onAddMovie() {
     this.router.navigate(['/admin/movies/new']);
+  }
+
+  ratingComponentClick(clickObj: any): void {
+    // const item = this.items.find(((i: any) => i.id === clickObj.itemId));
+    // if (!!item) {
+    //   item.rating = clickObj.rating;
+    //   this.ratingClicked = clickObj.rating;
+    //   this.itemIdRatingClicked = item.company;
+    // }
+
   }
 }

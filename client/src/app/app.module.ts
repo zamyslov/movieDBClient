@@ -23,6 +23,7 @@ import {ActorsListResolve} from "./shared/actors-list.resolve";
 import {CategoriesListResolve} from "./shared/categories-list.resolve";
 import { ActorsAddComponent } from './actors-page/actors-add/actors-add.component';
 import { UsersAddComponent } from './users-page/users-add/users-add.component';
+import {RatingComponent} from "./shared/components/rating/rating.component";
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { UsersAddComponent } from './users-page/users-add/users-add.component';
     ActorsInfoComponent,
     MoviesAddComponent,
     ActorsAddComponent,
-    UsersAddComponent
+    UsersAddComponent,
+    RatingComponent
   ],
   imports: [
     BrowserModule,
