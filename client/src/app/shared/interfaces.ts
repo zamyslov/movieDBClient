@@ -23,6 +23,13 @@ export interface Movie {
   _id?: string
 }
 
+export interface Vote {
+  mark: number,
+  Movie: Movie,
+  User: User,
+  _id?: string
+}
+
 export interface Category {
   name: string
   _id?: string
