@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {User, Vote} from "../interfaces";
+import {Vote} from "../interfaces";
 import {Observable} from "rxjs/internal/Observable";
 
 @Injectable({
@@ -13,6 +13,16 @@ export class VotesService {
 
   getByMovieId(id: string): Observable<Vote[]> {
     return this.http.get<Vote[]>(`/api/vote/movie/${id}`)
+  }
+
+  getAverageMarkByMovieId(id: string): number {
+    const obj = this.http.get<Vote[]>(`/api/vote/movie/${id}`);
+    let average = 0;
+    obj.subscribe((votes: Vote[]) => {
+        average = votes.reduce((a, b) => a + b.mark, 0) / votes.length;
+      }
+    );
+    return average;
   }
 
   getByMovieAndUserId(id: string): Observable<Vote[]> {
