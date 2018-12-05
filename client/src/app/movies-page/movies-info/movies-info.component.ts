@@ -7,6 +7,7 @@ import {of} from "rxjs/internal/observable/of";
 import {MaterialService} from "../../shared/classes/material.service";
 import {ActorsService} from "../../shared/services/actors.service";
 import {CategoriesService} from "../../shared/services/categories.service";
+import {VotesService} from "../../shared/services/votes.service";
 
 @Component({
   selector: 'app-movies-info',
@@ -21,6 +22,7 @@ export class MoviesInfoComponent implements OnInit {
   constructor(private moviesService: MoviesService,
               private actorsService: ActorsService,
               private categoriesService: CategoriesService,
+              private voteService: VotesService,
               private route: ActivatedRoute,
               private router: Router) {
   }
@@ -40,8 +42,8 @@ export class MoviesInfoComponent implements OnInit {
       .subscribe((movie: Movie) => {
           if (movie) {
             this.movie = movie;
+            this.movie.mark = this.voteService.getByMovieAndUserId(movie._id);
             const array = this.movie.actors;
-            console.log(this.movie.category);
             this.categoriesService.getById(''+this.movie.category)
               .subscribe((category: Category) => this.category = category);
             this.movie.actors = [];

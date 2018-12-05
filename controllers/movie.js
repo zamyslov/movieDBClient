@@ -47,7 +47,6 @@ module.exports.delete = async (req, res) => {
 
 module.exports.create = async (req, res) => {
     try {
-        console.log(req.body);
         const movie = await new Movie({
             name: req.body.name,
             year: req.body.year,

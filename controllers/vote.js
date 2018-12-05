@@ -14,7 +14,7 @@ module.exports.getByMovieAndUserId = async (req, res) => {
     try {
         const vote = await Vote.find({
             movie: req.params.movieId,
-            user: req.params.userId
+            user: req.query.userId
         });
         res.status(200).json(vote);
     } catch (e) {

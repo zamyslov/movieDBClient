@@ -3,6 +3,7 @@ import {MoviesService} from "../shared/services/movies.service";
 import {Movie} from "../shared/interfaces";
 import {AuthService} from "../shared/services/auth.service";
 import {Router} from "@angular/router";
+import {VotesService} from "../shared/services/votes.service";
 
 const STEP = 1;
 
@@ -16,11 +17,10 @@ export class MoviesPageComponent implements OnInit {
   movies: Movie[];
   pages = [];
   currentPage = 1;
-  limit = STEP;
-  rate = 3.5;
 
   constructor(private moviesService: MoviesService,
               private authService: AuthService,
+              private voteService: VotesService,
               private router: Router) {
   }
 
@@ -33,10 +33,11 @@ export class MoviesPageComponent implements OnInit {
   getAll() {
     const params = {
       offset: (this.currentPage - 1) * STEP,
-      limit: this.limit
+      limit: STEP
     };
     this.moviesService.getAll(params).subscribe(res => {
         this.movies = res.movie;
+        this.movies.forEach((e) => e.mark = this.voteService.getAverageMarkByMovieId(e._id));
         this.pages = new Array(Math.ceil(res.count / STEP));
       }
     );
@@ -65,13 +66,13 @@ export class MoviesPageComponent implements OnInit {
     this.router.navigate(['/admin/movies/new']);
   }
 
-  ratingComponentClick(clickObj: any): void {
-    // const item = this.items.find(((i: any) => i.id === clickObj.itemId));
-    // if (!!item) {
-    //   item.rating = clickObj.rating;
-    //   this.ratingClicked = clickObj.rating;
-    //   this.itemIdRatingClicked = item.company;
-    // }
+  // ratingComponentClick(clickObj: any): void {
+  // const item = this.items.find(((i: any) => i.id === clickObj.itemId));
+  // if (!!item) {
+  //   item.rating = clickObj.rating;
+  //   this.ratingClicked = clickObj.rating;
+  //   this.itemIdRatingClicked = item.company;
+  // }
 
-  }
+  // }
 }

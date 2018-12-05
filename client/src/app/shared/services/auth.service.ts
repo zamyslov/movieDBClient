@@ -51,6 +51,14 @@ export class AuthService {
     return false;
   }
 
+  getUserId(): string {
+    if (this.isAuthenticated()) {
+      const tokenPayload = decode(this.token);
+      return tokenPayload.userId;
+    }
+    return "";
+  }
+
   logout() {
     this.token = null;
     localStorage.clear();

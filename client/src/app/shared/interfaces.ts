@@ -20,6 +20,7 @@ export interface Movie {
   poster?: string,
   category: Category,
   actors: any,
+  mark?: number,
   _id?: string
 }
 

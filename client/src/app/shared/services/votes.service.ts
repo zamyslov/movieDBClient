@@ -1,14 +1,16 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Vote} from "../interfaces";
 import {Observable} from "rxjs/internal/Observable";
+import {AuthService} from "./auth.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class VotesService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private authService: AuthService) {
   }
 
   getByMovieId(id: string): Observable<Vote[]> {
@@ -25,8 +27,18 @@ export class VotesService {
     return average;
   }
 
-  getByMovieAndUserId(id: string): Observable<Vote[]> {
-    return this.http.get<Vote[]>(`/api/vote/user/movie/${id}`)
+  getByMovieAndUserId(id: string): number {
+    const obj = this.http.get<Vote>(`/api/vote/user/movie/${id}`, {
+      params: new HttpParams({
+        fromObject: {userId: this.authService.getUserId()}
+      })
+    });
+    let mark = 0;
+    obj.subscribe((vote: Vote) => {
+        mark = vote.mark;
+      }
+    );
+    return mark;
   }
 
   create(vote: Vote): Observable<Vote> {
