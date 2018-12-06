@@ -8,7 +8,7 @@
 </div>
 <div
   class="frow order-row"
-  *ngIf="movies; else loader"
+  *ngIf="loadedWithVotes; else loader"
 >
   <div *ngIf="movies.length !== 0; else empty">
     <ul class="pagination">

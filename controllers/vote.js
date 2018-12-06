@@ -3,7 +3,7 @@ const errorHandler = require('../utils/errorHandler');
 
 module.exports.getByMovieId = async (req, res) => {
     try {
-        const vote = await Vote.find({movie: req.params.movieId});
+        const vote = await Vote.find({movie: req.params.id});
         res.status(200).json(vote);
     } catch (e) {
         errorHandler(res, e);
@@ -12,8 +12,8 @@ module.exports.getByMovieId = async (req, res) => {
 
 module.exports.getByMovieAndUserId = async (req, res) => {
     try {
-        const vote = await Vote.find({
-            movie: req.params.movieId,
+        const vote = await Vote.findOne({
+            movie: req.params.id,
             user: req.query.userId
         });
         res.status(200).json(vote);
@@ -36,7 +36,7 @@ module.exports.delete = async (req, res) => {
 module.exports.create = async (req, res) => {
     try {
         const vote = await new Vote({
-            mark: req.body.name,
+            mark: req.body.mark,
             movie: req.body.movie,
             user: req.body.user
         }).save();

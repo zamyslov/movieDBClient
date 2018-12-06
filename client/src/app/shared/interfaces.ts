@@ -26,8 +26,8 @@ export interface Movie {
 
 export interface Vote {
   mark: number,
-  Movie: Movie,
-  User: User,
+  movie: string,
+  user: string,
   _id?: string
 }
 

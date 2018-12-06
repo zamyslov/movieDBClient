@@ -17,28 +17,16 @@ export class VotesService {
     return this.http.get<Vote[]>(`/api/vote/movie/${id}`)
   }
 
-  getAverageMarkByMovieId(id: string): number {
-    const obj = this.http.get<Vote[]>(`/api/vote/movie/${id}`);
-    let average = 0;
-    obj.subscribe((votes: Vote[]) => {
-        average = votes.reduce((a, b) => a + b.mark, 0) / votes.length;
-      }
-    );
-    return average;
+  getAverageMarkByMovieId(id: string): Observable<Vote[]> {
+    return this.http.get<Vote[]>(`/api/vote/movie/${id}`);
   }
 
-  getByMovieAndUserId(id: string): number {
-    const obj = this.http.get<Vote>(`/api/vote/user/movie/${id}`, {
+  getByMovieAndUserId(id: string): Observable<Vote> {
+    return this.http.get<Vote>(`/api/vote/user/movie/${id}`, {
       params: new HttpParams({
         fromObject: {userId: this.authService.getUserId()}
       })
     });
-    let mark = 0;
-    obj.subscribe((vote: Vote) => {
-        mark = vote.mark;
-      }
-    );
-    return mark;
   }
 
   create(vote: Vote): Observable<Vote> {
