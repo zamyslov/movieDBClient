@@ -7,7 +7,7 @@ module.exports.getAll = async (req, res) => {
             .sort({name: +1})
             .skip(+req.query.offset)
             .limit(+req.query.limit);
-        const count = await Movie.count();
+        const count = await Movie.countDocuments();
         res.status(200).json(
             {movie, count}
         );

@@ -48,7 +48,7 @@ module.exports.create = async (req, res) => {
 
 module.exports.update = async (req, res) => {
     const updated = {
-        mark: req.body.name,
+        mark: req.body.mark,
         movie: req.body.movie,
         user: req.body.user
     };

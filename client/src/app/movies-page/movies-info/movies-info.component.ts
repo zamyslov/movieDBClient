@@ -77,15 +77,19 @@ export class MoviesInfoComponent implements OnInit {
 
   createVote() {
     if (this.vote) {
-
+      this.vote.mark = +this.rate;
+      this.voteService.update(this.vote).subscribe(
+        () => {
+        },
+        error => {
+          MaterialService.toast(error.error.message);
+        })
     } else {
-      console.log(this.rate);
       const vote: Vote = {
         movie: this.movie._id,
         user: this.authService.getUserId(),
         mark: +this.rate
       };
-      console.log(vote);
       this.voteService.create(vote).subscribe(
         () => {
         },
