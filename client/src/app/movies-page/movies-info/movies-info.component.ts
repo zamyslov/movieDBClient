@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Actor, Category, Movie, Vote} from "../../shared/interfaces";
-import {switchMap} from "rxjs/operators";
 import {ActivatedRoute, Params, Router} from "@angular/router";
-import {MoviesService} from "../../shared/services/movies.service";
+import {switchMap} from "rxjs/operators";
 import {of} from "rxjs/internal/observable/of";
+import {Actor, Category, Movie, Vote} from "../../shared/interfaces";
+import {MoviesService} from "../../shared/services/movies.service";
 import {MaterialService} from "../../shared/classes/material.service";
 import {ActorsService} from "../../shared/services/actors.service";
 import {CategoriesService} from "../../shared/services/categories.service";
@@ -16,7 +16,7 @@ import {AuthService} from "../../shared/services/auth.service";
   styleUrls: ['./movies-info.component.css']
 })
 export class MoviesInfoComponent implements OnInit {
-  @Input() rate = 4;
+  @Input() rate = 0;
   movie: Movie;
   actors: Actor[] = [];
   category: Category = {name: ''};
@@ -85,18 +85,23 @@ export class MoviesInfoComponent implements OnInit {
           MaterialService.toast(error.error.message);
         })
     } else {
-      const vote: Vote = {
+      this.vote = {
         movie: this.movie._id,
         user: this.authService.getUserId(),
         mark: +this.rate
       };
-      this.voteService.create(vote).subscribe(
+      this.voteService.create(this.vote).subscribe(
         () => {
         },
         error => {
           MaterialService.toast(error.error.message);
         })
     }
+  }
+
+  changeVote() {
+    this.vote.mark = 0;
+    this.rate = 0;
   }
 
   updateMovie(movie_id: string) {

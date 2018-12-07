@@ -35,19 +35,28 @@
         </div>
       </div>
     </div>
-    <div class="col s12 m5">
+    <div class="col s8 m5">
       <div class="card horizontal card-font">
         <div class="card-stacked">
           <div class="card-content">
-            <bar-rating [(rate)]="rate" [max]="5"></bar-rating>
+            <p>Моя оценка</p>
+            <bar-rating [(rate)]="rate" [max]="5" [readOnly]="vote && vote.mark > 0"></bar-rating>
             <button
+              [disabled]="vote && vote.mark > 0"
               class="btn btn-small"
               (click)="createVote()"
             >
               <i class="material-icons left">edit</i>
-              Проголосовать
+              Оценить
             </button>
-
+            <button
+              *ngIf="vote && vote.mark > 0"
+              class="btn btn-small"
+              (click)="changeVote()"
+            >
+              <i class="material-icons left">update</i>
+              Изменить
+            </button>
           </div>
         </div>
       </div>
