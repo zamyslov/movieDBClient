@@ -16,7 +16,8 @@ import {AuthService} from "../../shared/services/auth.service";
   styleUrls: ['./movies-info.component.css']
 })
 export class MoviesInfoComponent implements OnInit {
-  @Input() rate = 0;
+  @Input() movieRate = 0;
+  @Input() userRate = 0;
   movie: Movie;
   actors: Actor[] = [];
   category: Category = {name: ''};
@@ -49,9 +50,14 @@ export class MoviesInfoComponent implements OnInit {
             this.voteService.getByMovieAndUserId(movie._id).subscribe((vote: Vote) => {
               if (vote) {
                 this.vote = vote;
-                this.rate = vote.mark;
+                this.userRate = vote.mark;
               }
             });
+            this.voteService.getAverageMarkByMovieId(movie._id)
+              .subscribe((votes: Vote[]) => {
+                  this.movieRate = votes.reduce((a, b) => a + b.mark, 0) / votes.length;
+                }
+              );
             const array = this.movie.actors;
             this.categoriesService.getById('' + this.movie.category)
               .subscribe((category: Category) => this.category = category);
@@ -77,7 +83,7 @@ export class MoviesInfoComponent implements OnInit {
 
   createVote() {
     if (this.vote) {
-      this.vote.mark = +this.rate;
+      this.vote.mark = +this.userRate;
       this.voteService.update(this.vote).subscribe(
         () => {
         },
@@ -88,7 +94,7 @@ export class MoviesInfoComponent implements OnInit {
       this.vote = {
         movie: this.movie._id,
         user: this.authService.getUserId(),
-        mark: +this.rate
+        mark: +this.userRate
       };
       this.voteService.create(this.vote).subscribe(
         () => {
@@ -101,7 +107,7 @@ export class MoviesInfoComponent implements OnInit {
 
   changeVote() {
     this.vote.mark = 0;
-    this.rate = 0;
+    this.userRate = 0;
   }
 
   updateMovie(movie_id: string) {

@@ -8,9 +8,7 @@ import {MaterialService} from "../../classes/material.service";
   templateUrl: './site-layout.component.html',
   styleUrls: ['./site-layout.component.css']
 })
-export class SiteLayoutComponent implements AfterViewInit, OnInit {
-
-  @ViewChild('floating') floatingRef: ElementRef;
+export class SiteLayoutComponent implements OnInit {
 
   links = [
     {url: '/movies', name: 'Фильмы'},
@@ -29,10 +27,6 @@ export class SiteLayoutComponent implements AfterViewInit, OnInit {
 
   constructor(private auth: AuthService,
               private router: Router) {
-  }
-
-  ngAfterViewInit() {
-    MaterialService.initializeFloatingButton(this.floatingRef);
   }
 
   logout(event: Event) {

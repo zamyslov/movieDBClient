@@ -21,7 +21,7 @@
     </button>
   </div>
   <div class="row">
-    <div class="col s12 m7">
+    <div class="col s12 m12">
       <div class="card horizontal card-font">
         <div class="card-image">
           <img src="{{movie.poster}}">
@@ -35,12 +35,24 @@
         </div>
       </div>
     </div>
-    <div class="col s8 m5">
+  </div>
+  <div class="row">
+    <div class="col s8 m6">
+      <div class="card horizontal card-font">
+        <div class="card-stacked">
+          <div class="card-content">
+            <p>Средняя оценка</p>
+            <bar-rating [(rate)]="movieRate" [max]="5" [readOnly]="true"></bar-rating>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col s8 m6">
       <div class="card horizontal card-font">
         <div class="card-stacked">
           <div class="card-content">
             <p>Моя оценка</p>
-            <bar-rating [(rate)]="rate" [max]="5" [readOnly]="vote && vote.mark > 0"></bar-rating>
+            <bar-rating [(rate)]="userRate" [max]="5" [readOnly]="vote && vote.mark > 0"></bar-rating>
             <button
               [disabled]="vote && vote.mark > 0"
               class="btn btn-small"
