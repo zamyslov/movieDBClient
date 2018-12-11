@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {MoviesService} from "../shared/services/movies.service";
-import {Movie, Vote} from "../shared/interfaces";
-import {AuthService} from "../shared/services/auth.service";
 import {Router} from "@angular/router";
+import {Movie, Vote} from "../shared/interfaces";
+import {MoviesService} from "../shared/services/movies.service";
+import {AuthService} from "../shared/services/auth.service";
 import {VotesService} from "../shared/services/votes.service";
 
 const STEP = 1;

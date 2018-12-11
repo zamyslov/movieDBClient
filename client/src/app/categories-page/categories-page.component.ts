@@ -1,9 +1,9 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {CategoriesService} from "../shared/services/categories.service";
-import {Category} from "../shared/interfaces";
-import {Observable} from "rxjs/internal/Observable";
-import {MaterialInstance, MaterialService} from "../shared/classes/material.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Observable} from "rxjs/internal/Observable";
+import {Category} from "../shared/interfaces";
+import {CategoriesService} from "../shared/services/categories.service";
+import {MaterialInstance, MaterialService} from "../shared/classes/material.service";
 
 @Component({
   selector: 'app-categories-page',

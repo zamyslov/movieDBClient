@@ -160,5 +160,4 @@ export class MoviesAddComponent implements OnInit, AfterViewInit {
     );
     this.form.enable();
   }
-
 }

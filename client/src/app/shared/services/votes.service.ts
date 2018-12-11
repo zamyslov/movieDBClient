@@ -13,10 +13,6 @@ export class VotesService {
               private authService: AuthService) {
   }
 
-  getByMovieId(id: string): Observable<Vote[]> {
-    return this.http.get<Vote[]>(`/api/vote/movie/${id}`)
-  }
-
   getAverageMarkByMovieId(id: string): Observable<Vote[]> {
     return this.http.get<Vote[]>(`/api/vote/movie/${id}`);
   }

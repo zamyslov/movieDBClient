@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {User} from "../shared/interfaces";
+import {Router} from "@angular/router";
 import {Observable} from "rxjs/internal/Observable";
+import {User} from "../shared/interfaces";
 import {UsersService} from "../shared/services/users.service";
 import {MaterialService} from "../shared/classes/material.service";
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-users-page',

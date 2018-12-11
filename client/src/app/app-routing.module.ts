@@ -5,7 +5,6 @@ import {SiteLayoutComponent} from "./shared/layouts/site-layout/site-layout.comp
 import {LoginPageComponent} from "./login-page/login-page.component";
 import {RegisterPageComponent} from "./register-page/register-page.component";
 import {AuthGuard} from "./shared/classes/auth.guard";
-import {OverviewPageComponent} from "./overview-page/overview-page.component";
 import {MoviesPageComponent} from "./movies-page/movies-page.component";
 import {ActorsPageComponent} from "./actors-page/actors-page.component";
 import {AuthAdminGuard} from "./shared/classes/auth-admin.guard";
@@ -44,7 +43,6 @@ const routes: Routes = [
   },
   {
     path: '', component: SiteLayoutComponent, canActivate: [AuthGuard], children: [
-      {path: 'overview', component: OverviewPageComponent},
       {path: 'movies', component: MoviesPageComponent},
       {path: 'movies/:id', component: MoviesInfoComponent},
       {path: 'actors', component: ActorsPageComponent},

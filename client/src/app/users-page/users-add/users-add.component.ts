@@ -3,8 +3,8 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {of} from "rxjs/internal/observable/of";
 import {switchMap} from "rxjs/operators";
-import {UsersService} from "../../shared/services/users.service";
 import {User} from "../../shared/interfaces";
+import {UsersService} from "../../shared/services/users.service";
 import {MaterialService} from "../../shared/classes/material.service";
 
 declare var M;

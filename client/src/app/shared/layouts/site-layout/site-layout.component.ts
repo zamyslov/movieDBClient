@@ -13,7 +13,7 @@ export class SiteLayoutComponent implements OnInit {
   links = [
     {url: '/movies', name: 'Фильмы'},
     {url: '/actors', name: 'Актеры'},
-    {url: '/charts', name: 'Рейтинги'},
+    {url: '/ratings', name: 'Рейтинги'},
   ];
 
   ngOnInit() {
