@@ -15,10 +15,6 @@ export class MaterialService {
     M.toast({html: message, classes: 'red'});
   }
 
-  static initializeFloatingButton(ref: ElementRef) {
-    M.FloatingActionButton.init(ref.nativeElement);
-  }
-
   static initializeMultiSelect(ref: ElementRef) {
     M.FormSelect.init(ref.nativeElement);
   }

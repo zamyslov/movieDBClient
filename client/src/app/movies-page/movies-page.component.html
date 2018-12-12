@@ -5,43 +5,95 @@
           (click)="onAddMovie()"
   >Добавить фильм
   </button>
-</div>
-<div
-  class="frow order-row"
-  *ngIf="loadedWithVotes; else loader"
->
-  <div *ngIf="movies.length !== 0; else empty">
-    <ul class="pagination">
-      <li [ngClass]="{disabled: currentPage == 1}"
-          class="waves-effect"
-          (click)="previousPage()"
-      ><a><i class="material-icons">chevron_left</i></a></li>
-      <li *ngFor="let page of pages; let i = index"
-          class="waves-effect"
-          [ngClass]="{active: currentPage == i+1}"
-          (click)="Page(i+1)"
-      ><a>{{i+1}}</a></li>
-      <li [ngClass]="{disabled: currentPage == pages.length}"
-          class="waves-effect"
-          (click)="nextPage()"
-      ><a><i
-        class="material-icons">chevron_right</i></a></li>
-    </ul>
-    <div
-      class="card waves-effect pointer"
-      *ngFor="let movie of movies"
-      [routerLink]="['/movies', movie._id]"
+  <label class="right-aligned">Вид:</label>
+  <div class="input-field col s2">
+    <select
+      #selectMoviesView
+      class="icons"
+      [(ngModel)]="currentMoviesView"
+      (change)="onMoviesViewChange()"
     >
-      <div class="center">
-        <img src="{{movie.poster}}" class="responsive-img order-img">
-      </div>
-      <div class="card-content center p10">
-        <h5 class="m0">{{movie.name}}</h5>
-        <bar-rating [rate]="movie.mark" [max]="5" [readOnly]="true"></bar-rating>
+      <option
+        *ngFor="let view of views"
+        value="{{view}}"
+        class="left"
+      >
+        {{view}}
+      </option>
+    </select>
+  </div>
+</div>
+<div *ngIf="currentMoviesView == 'Плитка'">
+  <div
+    class="frow order-row"
+    *ngIf="loadedWithVotes; else loader"
+  >
+    <div *ngIf="movies.length !== 0; else empty">
+      <ul class="pagination">
+        <li [ngClass]="{disabled: currentPage == 1}"
+            class="waves-effect"
+            (click)="previousPage()"
+        ><a><i class="material-icons">chevron_left</i></a></li>
+        <li *ngFor="let page of pages; let i = index"
+            class="waves-effect"
+            [ngClass]="{active: currentPage == i+1}"
+            (click)="Page(i+1)"
+        ><a>{{i+1}}</a></li>
+        <li [ngClass]="{disabled: currentPage == pages.length}"
+            class="waves-effect"
+            (click)="nextPage()"
+        ><a><i
+          class="material-icons">chevron_right</i></a></li>
+      </ul>
+      <div
+        class="card waves-effect pointer"
+        *ngFor="let movie of movies"
+        [routerLink]="['/movies', movie._id]"
+      >
+        <div class="center">
+          <img src="{{movie.poster}}" class="responsive-img order-img">
+        </div>
+        <div class="card-content center p10">
+          <h5 class="m0">{{movie.name}}</h5>
+          <bar-rating [rate]="movie.mark" [max]="5" [readOnly]="true"></bar-rating>
+        </div>
       </div>
     </div>
   </div>
 </div>
+<div *ngIf="currentMoviesView == 'Таблица'">
+  <div
+    class="frow order-row"
+    *ngIf="loadedWithVotes; else loader"
+  >
+    <table>
+      <thead>
+      <tr>
+        <th>Постер</th>
+        <th>Название</th>
+        <th>Год выпуска</th>
+        <th>Жанр</th>
+        <th>Оценка</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let movie of movies">
+        <td>
+          <img src="{{movie.poster}}" class="responsive-img order-img">
+        </td>
+        <td>{{movie.name}}</td>
+        <td>{{movie.year}}</td>
+        <td>{{movie.category ? movie.category.name: ""}}</td>
+        <td>
+          <bar-rating [rate]="movie.mark" [max]="5" [readOnly]="true"></bar-rating>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
 
 <ng-template #loader>
   <app-loader></app-loader>

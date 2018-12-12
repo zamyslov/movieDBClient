@@ -1,23 +1,27 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {Movie, Vote} from "../shared/interfaces";
 import {MoviesService} from "../shared/services/movies.service";
 import {AuthService} from "../shared/services/auth.service";
 import {VotesService} from "../shared/services/votes.service";
+import {MaterialService} from "../shared/classes/material.service";
 
-const STEP = 1;
 
 @Component({
   selector: 'app-movies-page',
   templateUrl: './movies-page.component.html',
   styleUrls: ['./movies-page.component.css']
 })
-export class MoviesPageComponent implements OnInit {
+export class MoviesPageComponent implements OnInit, AfterViewInit {
   isAdmin: boolean;
   movies: Movie[];
   pages = [];
   currentPage = 1;
   loadedWithVotes = false;
+  @ViewChild('selectMoviesView') selectMoviesViewRef: ElementRef;
+  views = ['Плитка', 'Таблица'];
+  currentMoviesView = 'Список';
+  step = 1;
 
   constructor(private moviesService: MoviesService,
               private authService: AuthService,
@@ -31,14 +35,19 @@ export class MoviesPageComponent implements OnInit {
     this.isAdmin = this.authService.isAdmin();
   }
 
+  ngAfterViewInit() {
+    MaterialService.initializeMultiSelect(this.selectMoviesViewRef);
+  }
+
+
   getAll() {
     const params = {
-      offset: (this.currentPage - 1) * STEP,
-      limit: STEP
+      offset: (this.currentPage - 1) * this.step,
+      limit: this.step
     };
     this.moviesService.getAll(params).subscribe(res => {
         this.movies = res.movie;
-        this.pages = new Array(Math.ceil(res.count / STEP));
+        this.pages = new Array(Math.ceil(res.count / this.step));
         this.loadedWithVotes = false;
         this.movies.forEach((e) => {
           this.voteService.getAverageMarkByMovieId(e._id)
@@ -74,4 +83,17 @@ export class MoviesPageComponent implements OnInit {
   onAddMovie() {
     this.router.navigate(['/admin/movies/new']);
   }
+
+  onMoviesViewChange() {
+    this.loadedWithVotes = false;
+    this.currentPage = 1;
+    if (this.currentMoviesView == "Таблица") {
+      this.step = 20;
+    } else {
+      this.step = 1;
+    }
+    this.getAll();
+  }
+
+
 }
